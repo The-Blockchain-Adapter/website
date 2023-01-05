@@ -1,16 +1,36 @@
-import Head from "next/head";
+import type {NextPage} from 'next'
+import {signIn, signOut, useSession} from 'next-auth/react'
+import Image from 'next/image'
 
-export default function Home() {
-	return (
-		<>
-			<Head>
-				<title>The Blockchain Adapter</title>
-				<meta name="description" content="" />
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-			<main>
-				<h1 className="text-5xl text-center">The Blockchain Adapter</h1>
-			</main>
-		</>
-	);
+const Home: NextPage = () => {
+  const {data: session} = useSession()
+
+  if (session) {
+    const {user} = session
+
+    return (
+      <>
+        {user?.image && (
+          <Image
+            src={user.image}
+            alt=""
+            width={38}
+            height={38}
+            style={{borderRadius: '50%'}}
+          />
+        )}
+        Hello, {user?.name}!<br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    )
+  }
+
+  return (
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
+  )
 }
+
+export default Home
