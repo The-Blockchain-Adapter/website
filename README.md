@@ -1,8 +1,10 @@
 # Run the website on your machine
 
-1. copy this repo
+1. Copy this repo
 
-2. enter theses commands in your terminal
+2. Enter the client ID and the client secret of your discord app in the .env file
+
+3. Enter theses commands in your terminal
 
 ```bash
 npm i

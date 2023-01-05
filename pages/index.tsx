@@ -1,12 +1,14 @@
 import type { NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { SiDiscord } from "react-icons/si";
 
 const Home: NextPage = () => {
 	const { data: session } = useSession();
 
 	if (session) {
 		const { user } = session;
+		console.log(user);
 		return (
 			<div>
 				<div className="flex m-auto bg-sky-300 text-center justify-center items-center h-full">
@@ -42,9 +44,10 @@ const Home: NextPage = () => {
 					The Blockchain Adapter
 				</h1>
 				<button
-					className="bg-sky-600 p-3 rounded-3xl text-white hover:scale-105 ease-in duration-300"
+					className="bg-sky-600 p-3 rounded-3xl flex justify-center items-center text-center text-white hover:scale-105 ease-in duration-300"
 					onClick={() => signIn()}
 				>
+					<SiDiscord size={30} className="mr-2" />
 					Sign in
 				</button>
 			</div>
