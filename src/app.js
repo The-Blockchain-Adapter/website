@@ -6,7 +6,6 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const db = require("./database/database");
-const mongoose = require("mongoose");
 const path = require("path");
 const DiscordStrategy = require("./strategies/discordstrategy"); //do not delete
 

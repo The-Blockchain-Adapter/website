@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const DiscordUser = require("../models/DiscordUser");
 
 function isAuthorized(req, res, next) {
 	if (req.isAuthenticated()) return next();
