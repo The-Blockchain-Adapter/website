@@ -1,11 +1,20 @@
 const router = require("express").Router();
 const passport = require("passport");
 
-router.get("/", passport.authenticate("discord"));
+function isAuthorized(req, res, next) {
+	if (req.isAuthenticated()) {
+		res.redirect("/dashboard");
+	} else {
+		next();
+	}
+}
+
+router.get("/", isAuthorized, passport.authenticate("discord"));
+
 router.get(
 	"/redirect",
 	passport.authenticate("discord", {
-		failureRedirect: "/forbidden",
+		failureRedirect: "/",
 		successRedirect: "/dashboard",
 	})
 );

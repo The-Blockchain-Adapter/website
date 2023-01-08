@@ -3,10 +3,12 @@ const express = require("express");
 const app = express();
 const PORT = 3000 || 3001;
 const session = require("express-session");
-const DiscordStrategy = require("./strategies/discordstrategy");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 const db = require("./database/database");
+const mongoose = require("mongoose");
 const path = require("path");
+const DiscordStrategy = require("./strategies/discordstrategy"); //do not delete
 
 db.then(() => console.log("Connected to MongoDB")).catch((err) => console.log(err));
 
@@ -16,12 +18,16 @@ const dashboardRoute = require("./routes/dashboard");
 
 app.use(
 	session({
-		secret: "i eat pasta",
+		secret: "i eat three pasta every millisecond",
 		cookie: {
 			maxAge: 60000 * 60 * 24,
 		},
 		saveUninitialized: false,
+		resave: false,
 		name: "discord.oauth2",
+		store: MongoStore.create({
+			mongoUrl: process.env.MONGO_URI,
+		}),
 	})
 );
 
