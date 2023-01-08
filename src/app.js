@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = 3000 || 3001;
 const session = require("express-session");
 const DiscordStrategy = require("./strategies/discordstrategy");
 const passport = require("passport");
