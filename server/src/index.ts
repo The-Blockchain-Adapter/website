@@ -1,16 +1,9 @@
 import { config } from "dotenv";
+import { createApp } from "./utils/createApp";
+import "./database";
 config();
 
-import express, { Express } from "express";
-import routes from "./routes";
 const PORT = process.env.PORT || 3001;
-
-function createApp(): Express {
-	const app = express();
-	app.use("/api", routes);
-
-	return app;
-}
 
 async function main() {
 	try {
