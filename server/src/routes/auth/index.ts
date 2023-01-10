@@ -12,7 +12,8 @@ router.get("/discord/redirect", passport.authenticate("discord"), (req, res) => 
 });
 
 router.get("/status", (req, res) => {
-	return req.user ? res.send(req.user) : res.status(401).send({ msg: "Not Authenticated" });
+	return req.user ? res.send(req.user) : res.sendStatus(401);
 });
+//res.status(401).send({ msg: "Not Authenticated" })
 
 export default router;

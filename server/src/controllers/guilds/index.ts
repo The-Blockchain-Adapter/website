@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../../database/schemas/User";
-import { getMutualGuildsService } from "../../services/guilds";
+import { getGuildService, getMutualGuildsService } from "../../services/guilds";
 
 export async function getGuildsController(req: Request, res: Response) {
 	const user = req.user as User;
@@ -23,5 +23,16 @@ export async function getGuildPermissionsController(req: Request, res: Response)
 	} catch (err) {
 		console.log(err);
 		res.status(400).send("Error");
+	}
+}
+
+export async function getGuildController(req: Request, res: Response) {
+	const { id } = req.params;
+	try {
+		const { data: guild } = await getGuildService(id);
+		res.send(guild);
+	} catch (err) {
+		console.log(err);
+		res.status(400).send({ msg: "Error" });
 	}
 }

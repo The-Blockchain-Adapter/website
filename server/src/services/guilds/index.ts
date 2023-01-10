@@ -28,3 +28,9 @@ export async function getMutualGuildsService(id: string) {
 		botGuilds.some((botGuild) => botGuild.id === guild.id)
 	);
 }
+
+export function getGuildService(id: string) {
+	return axios.get(`${DISCORD_API_URL}/guilds/${id}`, {
+		headers: { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}` },
+	});
+}

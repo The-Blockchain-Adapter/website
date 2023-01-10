@@ -3,9 +3,6 @@ import { ReactElement } from "react";
 import { useRouter } from "next/router";
 
 export function HeaderLayout({ children }: { children: ReactElement }) {
-	const handleLogin = () => {
-		window.location.href = "http://localhost:3001/api/auth/discord";
-	};
 	const router = useRouter();
 	return (
 		<>
@@ -20,8 +17,9 @@ export function HeaderLayout({ children }: { children: ReactElement }) {
 					<h1>The Blockchain Adapter</h1>
 				</div>
 			</button>
-			<button onClick={handleLogin}>Dashboard</button>
+			<button onClick={() => router.push(`/dashboard`)}>Dashboard</button>
 			<button onClick={() => router.push(`/docs`)}>Docs</button>
+
 			<>{children}</>
 		</>
 	);

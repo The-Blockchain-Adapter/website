@@ -2,7 +2,6 @@ import { GetServerSidePropsContext } from "next";
 import axios from "axios";
 import { validateCookies } from "./helpers";
 import { Guild } from "./types";
-import { NextResponse } from "next/server";
 const API_URL = "http://localhost:3001/api";
 
 export const fetchMutualGuilds = async (context: GetServerSidePropsContext) => {
@@ -17,6 +16,30 @@ export const fetchMutualGuilds = async (context: GetServerSidePropsContext) => {
 	}
 };
 
-export const fetchValidGuild = async (id: string, headers: HeadersInit) => {
-	return fetch(`${API_URL}/guilds/${id}/permissions`, { headers });
+export const fetchValidGuilds = async (context: GetServerSidePropsContext, id: string) => {
+	const headers = validateCookies(context);
+	if (!headers) return { redirect: { destination: "/" } };
+	try {
+		const { data } = await axios.get<Guild[]>(`${API_URL}/guilds/${id}/permissions`, {
+			headers,
+		});
+		return { props: { data } };
+	} catch (err) {
+		console.log(err);
+		return { redirect: { destination: "/" } };
+	}
+};
+
+export const fetchGuild = async (context: GetServerSidePropsContext) => {
+	const headers = validateCookies(context);
+	if (!headers) return { redirect: { destination: "/" } };
+	try {
+		const { data: guild } = await axios.get(`${API_URL}/guilds/${context.query.id}`, {
+			headers,
+		});
+		return { props: { guild } };
+	} catch (err) {
+		console.log(err);
+		return { redirect: { destination: "/" } };
+	}
 };

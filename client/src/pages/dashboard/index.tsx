@@ -10,17 +10,21 @@ type Props = {
 	guilds: Guild[];
 };
 
+// @ts-ignore
 const DashboardPage: NextPageWithLayout<Props> = ({ guilds }) => {
 	const router = useRouter();
 
 	return (
 		<div>
 			<h1>Select a Guild</h1>
-			{guilds.map((guild) => (
-				<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
-					<GuildItem guild={guild} />
-				</div>
-			))}
+			{
+				// @ts-ignore
+				guilds.map((guild) => (
+					<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
+						<GuildItem guild={guild} />
+					</div>
+				))
+			}
 		</div>
 	);
 };
