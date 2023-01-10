@@ -8,7 +8,7 @@ router.get("/discord", passport.authenticate("discord"), (req, res) => {
 });
 
 router.get("/discord/redirect", passport.authenticate("discord"), (req, res) => {
-	res.send(200);
+	res.redirect("http://localhost:3000/dashboard");
 });
 
 router.get("/status", (req, res) => {
