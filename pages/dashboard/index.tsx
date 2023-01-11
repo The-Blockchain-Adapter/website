@@ -1,10 +1,10 @@
 import { GuildItem } from "../../components/GuildItem";
 import { Header } from "../../components/Header";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 // @ts-ignore
-export default function DashboardPage({ guilds }) {
+export default async function DashboardPage() {
 	const { data: session, status } = useSession();
 	if (status === "loading") {
 		return <p>Loading...</p>;
@@ -16,6 +16,10 @@ export default function DashboardPage({ guilds }) {
 	}
 
 	//GET ALL THE USER GUILDS
+	const me = await fetch("http://discord.com/api/users/@me", {
+		// @ts-ignore
+		headers: { Authorization: `Bearer ${session.accessToken}` },
+	}).then((res) => res.json());
 
 	return (
 		<div>
@@ -31,3 +35,21 @@ export default function DashboardPage({ guilds }) {
 		</div>
 	);
 }
+/*
+export async function getServerSideProps(context) {
+	const session = await getSession(context);
+
+	if (!session) {
+		return {
+			redirect: {
+				destination: "/",
+				permanent: false,
+			},
+		};
+	}
+
+	return {
+		props: { session },
+	};
+}
+*/

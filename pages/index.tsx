@@ -10,7 +10,7 @@ export default function Home() {
 			{!session && (
 				<button
 					className="bg-[#7289da] p-3 rounded-3xl flex justify-center items-center text-center text-white hover:scale-105 ease-in duration-300"
-					onClick={() => signIn()}
+					onClick={() => signIn("discord", { redirect: true, callbackUrl: "/dashboard" })}
 				>
 					<SiDiscord size={30} className="mr-2" />
 					Sign in with Discord

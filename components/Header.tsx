@@ -31,7 +31,9 @@ export function Header() {
 				</button>
 			)}
 			{!session && (
-				<button onClick={() => signIn()}>
+				<button
+					onClick={() => signIn("discord", { redirect: true, callbackUrl: "/dashboard" })}
+				>
 					<FaSignInAlt size={30} />
 				</button>
 			)}
