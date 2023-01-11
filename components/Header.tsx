@@ -1,8 +1,12 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
 export function Header() {
+	const { data: session } = useSession();
 	const router = useRouter();
+
 	return (
 		<div>
 			<Head>
@@ -18,6 +22,19 @@ export function Header() {
 			</button>
 			<button onClick={() => router.push(`/dashboard`)}>Dashboard</button>
 			<button onClick={() => router.push(`/docs`)}>Docs</button>
+			{session && (
+				<button onClick={() => signOut()}>
+					{session.user?.image && (
+						<img src={session.user.image} width="50px" height="50px" />
+					)}
+					{!session.user?.image && <FaSignOutAlt size={30} />}
+				</button>
+			)}
+			{!session && (
+				<button onClick={() => signIn()}>
+					<FaSignInAlt size={30} />
+				</button>
+			)}
 		</div>
 	);
 }
