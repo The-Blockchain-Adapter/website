@@ -1,18 +1,16 @@
 import { useSession, getSession, signIn } from "next-auth/react";
-import { NextRequest, NextResponse } from "next/server";
+import { useRouter } from "next/router";
 
-export default function Secret(req: NextRequest, res: NextResponse) {
+export default function Secret() {
 	//verify that the user is signed in
 	const { data: session, status } = useSession();
 	if (status === "loading") {
 		return <p>Loading...</p>;
 	}
 	if (status === "unauthenticated") {
-		return (
-			<>
-				<button onClick={() => signIn()}>Sign in to access this page</button>
-			</>
-		);
+		const router = useRouter();
+		router.push(`/`);
+		return;
 	}
 
 	return (
