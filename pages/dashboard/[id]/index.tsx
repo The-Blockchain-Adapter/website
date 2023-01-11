@@ -1,4 +1,3 @@
-import { Header } from "../../../components/Header";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -23,8 +22,6 @@ export default function DashboardIDPage({ guild }) {
 	const router = useRouter();
 	return (
 		<div>
-			<Header />
-
 			{/*
 			<GuildHeader guild={guild} />
 			*/}

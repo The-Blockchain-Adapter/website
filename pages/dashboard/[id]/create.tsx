@@ -1,4 +1,3 @@
-import { Header } from "../../../components/Header";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GuildHeader } from "../../../components/GuildHeader";
@@ -20,7 +19,6 @@ export default function DashboardIDCreatePage({ guild }) {
 
 	return (
 		<div>
-			<Header />
 			{/*
 			<GuildHeader guild={guild} />
 			*/}
