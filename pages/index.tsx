@@ -7,7 +7,7 @@ export default function Home() {
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			{!session && (
 				<button
-					className="bg-[#7289da] p-3 rounded-3xl my-3 justify-center text-center items-center text-white "
+					className="duration-300 mt-5 "
 					onClick={() => signIn("discord", { redirect: true, callbackUrl: "/dashboard" })}
 				>
 					<div className="text-center justify-center items-center flex">
@@ -16,7 +16,7 @@ export default function Home() {
 					</div>
 				</button>
 			)}
-			<p>
+			<p className="my-5">
 				En cpp le marché alloue les ressources rares de façon optimale du point de vue
 				collectif (optimum de Pareto). En effet, les ressources rares sont attribuées à la
 				personne qui en a le plus besoin. Cela permet de réduire les inégalités et de

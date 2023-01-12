@@ -15,12 +15,12 @@ export function Header() {
 			<main className="bg-gray-300 flex justify-around sm:px-4 py-4 items-center shadow-md shadow-gray-400 mb-2">
 				<img
 					onClick={() => router.push(`/`)}
-					className="rounded-full shadow-sm shadow-gray-400 mx-2 sm:hidden flex lg:flex"
+					className="rounded-full shadow-sm shadow-gray-400 mx-2 sm:hidden flex lg:flex cursor-pointer"
 					src={"profilePicture.png"}
 					width="100px"
 					height="100px"
 				/>
-				<h1 onClick={() => router.push(`/`)} className="mx-2 sm:flex hidden">
+				<h1 onClick={() => router.push(`/`)} className="cursor-pointer mx-2 sm:flex hidden">
 					The Blockchain Adapter
 				</h1>
 				<div className="flex items-center">
@@ -33,7 +33,7 @@ export function Header() {
 					{session && (
 						<img
 							onClick={() => signOut()}
-							className="rounded-full mx-2 shadow-md shadow-gray-400"
+							className="rounded-full mx-2 shadow-md shadow-gray-400 hover:scale-105 ease-in duration-200 cursor-pointer"
 							src={session.user.image}
 							width="60px"
 							height="60px"

@@ -1,14 +1,13 @@
-import { useRouter } from "next/router";
 import { getSession } from "next-auth/react";
 import { authorizeAccess } from "../../../lib/mongo/authoriseAccess";
 import { GuildHeader } from "../../../components/GuildHeader";
 
 export default function DashboardIDCreatePage({ session, guild }) {
 	return (
-		<div>
+		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			{<GuildHeader guild={guild} />}
-			<p>editeur de code très simple style scratch fixe</p>
-		</div>
+			<p className="my-5">Editeur de code très simple style scratch fixe.</p>
+		</main>
 	);
 }
 

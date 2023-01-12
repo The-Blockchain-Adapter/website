@@ -25,8 +25,8 @@ export default function DashboardPage({ session, guilds }) {
 					</h2>
 				</>
 			) : (
-				<div className="m-6">
-					<h2>Select a Guild</h2>
+				<div className="m-10">
+					<h2>Select a Guild:</h2>
 					{guilds.map((guild) => (
 						<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
 							<GuildItem guild={guild} />
