@@ -5,10 +5,6 @@ import { authorizeAccess } from "../../../lib/mongo/authoriseAccess";
 import { GuildHeader } from "../../../components/GuildHeader";
 
 export default function DashboardIDPage({ session, guild }) {
-	// CHECK IF THE USER IS ALLOWED TO SEE THIS GUILD
-	// GET THE GUILD INFOS (ICON & NAME)
-	// GET ALL THE SCRIPTS OF THE GUILD
-
 	const router = useRouter();
 	return (
 		<div>
@@ -44,6 +40,8 @@ export async function getServerSideProps(context) {
 			},
 		};
 	}
+
+	//Transform the guild object so it doesn't show an error because of the _id component
 	const guild = JSON.parse(JSON.stringify(brutGuild));
 
 	return {

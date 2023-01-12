@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const requiredString = { type: String, required: true };
 
+// This is the guild schema from the discord API, not the one with details from the bot database
 const discordGuildSchema = new Schema({
 	id: requiredString,
 	name: requiredString,

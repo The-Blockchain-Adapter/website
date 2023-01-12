@@ -1,4 +1,5 @@
 export const GuildItem = ({ guild }) => {
+	// show the guild icon
 	function getSource() {
 		if (guild.icon !== null) {
 			return `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;

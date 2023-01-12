@@ -11,7 +11,7 @@ export async function getUserGuilds(session) {
 		({ permissions }) => (parseInt(permissions) & 0x8) === 0x8
 	);
 
-	// Connect to mongodb
+	// Connect to mongodb and get all the guilds where the bot is
 	let guildslist;
 	try {
 		let client = await clientPromise;
@@ -21,7 +21,7 @@ export async function getUserGuilds(session) {
 		console.log(error);
 	}
 
-	// Only return guilds that are in the database and where the user is admin
+	// Only return guilds that are signin and where the user is admin on
 	return adminUserGuilds.filter((guild) =>
 		guildslist.some((botguild) => botguild.guildId === guild.id)
 	);

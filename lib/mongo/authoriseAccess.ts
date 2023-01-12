@@ -11,12 +11,13 @@ export async function authorizeAccess(session, context) {
 			return null;
 		}
 
-		//find the guild from the user in the database
+		//verify if the user can access this guild
 		const userGuild = userProfile.discordGuilds.find((guild) => guild.id === context.params.id);
 		if (userGuild === undefined) {
 			return null;
 		}
 
+		//get the full guild infos
 		let guild = await db.collection("guilds").findOne({ guildId: userGuild.id });
 		if (!guild) {
 			return null;

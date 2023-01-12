@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 
 export default NextAuth({
+	// Choose discord as login provider
 	providers: [
 		DiscordProvider({
 			clientId: process.env.DISCORD_CLIENT_ID,
@@ -9,11 +10,14 @@ export default NextAuth({
 			authorization: { params: { scope: "identify guilds" } },
 		}),
 	],
+	// Deletion time of the cookies
 	session: {
 		maxAge: 60 * 60 * 24 * 20, // 20 days
 		updateAge: 60 * 60 * 24 * 10, // 10 day
 	},
+	// Cookie secret
 	secret: process.env.SECRET,
+	//Store the user id and token in the session object. To get them from anywhere in the website
 	callbacks: {
 		async session({ session, token, user }) {
 			// Send properties to the client, like an access_token and user id from a provider.

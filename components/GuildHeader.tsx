@@ -2,6 +2,8 @@ import { useRouter } from "next/router";
 
 export const GuildHeader = ({ guild }) => {
 	const router = useRouter();
+
+	// Show the correct guild icon
 	function getSource() {
 		if (guild.guildIcon != "None.") {
 			return guild.guildIcon;
