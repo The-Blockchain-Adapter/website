@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { signOut, useSession } from "next-auth/react";
 
 export function Header() {
 	const { data: session } = useSession();
@@ -27,14 +26,9 @@ export function Header() {
 					{session.user?.image && (
 						<img src={session.user.image} width="50px" height="50px" />
 					)}
-					{!session.user?.image && <FaSignOutAlt size={30} />}
-				</button>
-			)}
-			{!session && (
-				<button
-					onClick={() => signIn("discord", { redirect: true, callbackUrl: "/dashboard" })}
-				>
-					<FaSignInAlt size={30} />
+					{!session.user?.image && (
+						<img src={"/default_guild_icon.png"} width="50px" height="50px" />
+					)}
 				</button>
 			)}
 		</div>

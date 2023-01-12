@@ -1,19 +1,22 @@
 import { GuildItem } from "../../components/GuildItem";
 import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
+import { getUserGuilds } from "../../lib/getUserGuilds";
 
 // @ts-ignore
-export default function DashboardPage() {
+export default function DashboardPage({ guilds }) {
+	const router = useRouter();
 	return (
 		<div>
 			<h1>Select a Guild</h1>
-
-			{/*
+			{
 				// @ts-ignore
 				guilds.map((guild) => (
 					<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
 						<GuildItem guild={guild} />
 					</div>
-				))*/}
+				))
+			}
 		</div>
 	);
 }
@@ -31,35 +34,10 @@ export async function getServerSideProps(context) {
 		};
 	}
 
-	const userGuilds = await fetch("http://discord.com/api/users/@me/guilds", {
-		// @ts-ignore
-		headers: { Authorization: `Bearer ${session.accessToken}` },
-	}).then((res) => res.json());
+	// Get all the guilds that are registered in the database and where the user is admin
+	const guilds = await getUserGuilds(session);
 
-	//trier pour ne retourner que les guilds a afficher
-	const adminUserGuilds = userGuilds.filter(
-		// @ts-ignore
-		({ permissions }) => (parseInt(permissions) & 0x8) === 0x8
-	);
-
-	console.log(adminUserGuilds);
-
-	/*
-	const botGuilds = await fetch("http://discord.com/api/v9/users/@me/guilds", {
-		// @ts-ignore
-		headers: { Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}` },
-	}).then((res) => res.json());
-	console.log(botGuilds);
-
-
-	
-
-	// @ts-ignore
-	const mutualAdminGuilds = adminUserGuilds.filter((guild) =>
-		botGuilds.some((botGuild) => botGuild.id === guild.id)
-	);
-*/
 	return {
-		props: { adminUserGuilds },
+		props: { guilds },
 	};
 }

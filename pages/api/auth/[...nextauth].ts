@@ -26,10 +26,6 @@ export default NextAuth({
 			session.accessToken = token.accessToken;
 			// @ts-ignore
 			session.user.id = token.id;
-
-			console.log(token.accessToken);
-			console.log(token.id);
-
 			return session;
 		},
 		async jwt({ token, account, profile }) {
