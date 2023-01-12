@@ -1,4 +1,3 @@
-//@ts-ignore
 export const GuildItem = ({ guild }) => {
 	function getSource() {
 		if (guild.icon !== null) {

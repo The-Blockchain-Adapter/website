@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { GuildHeader } from "../../../components/GuildHeader";
 
-//@ts-ignore
 export default function DashboardIDPage({ guild }) {
 	const { data: session, status } = useSession();
 	if (status === "loading") {

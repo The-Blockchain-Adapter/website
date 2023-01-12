@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 
-//@ts-ignore
 export const GuildHeader = ({ guild }) => {
 	const router = useRouter();
 	function getSource() {

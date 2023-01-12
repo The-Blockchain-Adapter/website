@@ -1,7 +1,5 @@
 import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
-import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
-import clientPromise from "../../../lib/mongodb";
 
 export default NextAuth({
 	providers: [
@@ -17,7 +15,6 @@ export default NextAuth({
 		maxAge: 60 * 60 * 24 * 20, // 20 days
 		updateAge: 60 * 60 * 24 * 10, // 10 day
 	},
-	//adapter: MongoDBAdapter(clientPromise),
 	secret: process.env.SECRET,
 	callbacks: {
 		async session({ session, token, user }) {
@@ -26,6 +23,7 @@ export default NextAuth({
 			session.accessToken = token.accessToken;
 			// @ts-ignore
 			session.user.id = token.id;
+			console.log("session", session);
 			return session;
 		},
 		async jwt({ token, account, profile }) {
@@ -39,3 +37,7 @@ export default NextAuth({
 		},
 	},
 });
+
+// import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
+// import clientPromise from "../../../lib/mongodb";
+// adapter: MongoDBAdapter(clientPromise),

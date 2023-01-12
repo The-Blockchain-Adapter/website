@@ -2,26 +2,41 @@ import { GuildItem } from "../../components/GuildItem";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { getUserGuilds } from "../../lib/getUserGuilds";
+import Link from "next/link";
 
-// @ts-ignore
 export default function DashboardPage({ guilds }) {
 	const router = useRouter();
 	return (
 		<div>
-			<h1>Select a Guild</h1>
-			{
-				// @ts-ignore
-				guilds.map((guild) => (
-					<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
-						<GuildItem guild={guild} />
-					</div>
-				))
-			}
+			{guilds.length === 0 ? (
+				<>
+					<h1>You are not registered on any guild</h1>
+					<h2>You need to be admin of your guild</h2>
+					<h2>The bot has to be inside the guild</h2>
+					<h2>And you need to type the /init command in a channel</h2>
+					<h2>Otherwise, try to refresh the page or to connect again with discord</h2>
+					<h2>
+						Please check the{" "}
+						<span>
+							<Link href="/docs">documentation</Link>
+						</span>{" "}
+						for more informations
+					</h2>
+				</>
+			) : (
+				<>
+					<h1>Select a Guild</h1>
+					{guilds.map((guild) => (
+						<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
+							<GuildItem guild={guild} />
+						</div>
+					))}
+				</>
+			)}
 		</div>
 	);
 }
 
-//@ts-ignore
 export async function getServerSideProps(context) {
 	// Check if the user is connected. Otherwise return him to the home page
 	const session = await getSession(context);
@@ -36,6 +51,14 @@ export async function getServerSideProps(context) {
 
 	// Get all the guilds that are registered in the database and where the user is admin
 	const guilds = await getUserGuilds(session);
+
+	/*
+	if(user is registered on the database){
+		update his guilds on the database
+	} else {
+		create a new user on the database
+	}
+	*/
 
 	return {
 		props: { guilds },
