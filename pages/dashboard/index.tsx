@@ -1,10 +1,11 @@
 import { GuildItem } from "../../components/GuildItem";
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { getUserGuilds } from "../../lib/getUserGuilds";
+import { getUserGuilds } from "../../lib/mongo/getUserGuilds";
+import { createOrUpdateUser } from "../../lib/mongo/createOrUpdateUser";
+import { getSession } from "next-auth/react";
 import Link from "next/link";
 
-export default function DashboardPage({ guilds }) {
+export default function DashboardPage({ session, guilds }) {
 	const router = useRouter();
 	return (
 		<div>
@@ -52,15 +53,10 @@ export async function getServerSideProps(context) {
 	// Get all the guilds that are registered in the database and where the user is admin
 	const guilds = await getUserGuilds(session);
 
-	/*
-	if(user is registered on the database){
-		update his guilds on the database
-	} else {
-		create a new user on the database
-	}
-	*/
+	//Update the user on the database
+	await createOrUpdateUser(session, guilds);
 
 	return {
-		props: { guilds },
+		props: { session, guilds },
 	};
 }

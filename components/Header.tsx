@@ -26,9 +26,6 @@ export function Header() {
 					{session.user?.image && (
 						<img src={session.user.image} width="50px" height="50px" />
 					)}
-					{!session.user?.image && (
-						<img src={"/default_guild_icon.png"} width="50px" height="50px" />
-					)}
 				</button>
 			)}
 		</div>

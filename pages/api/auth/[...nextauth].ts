@@ -4,9 +4,7 @@ import DiscordProvider from "next-auth/providers/discord";
 export default NextAuth({
 	providers: [
 		DiscordProvider({
-			// @ts-ignore
 			clientId: process.env.DISCORD_CLIENT_ID,
-			// @ts-ignore
 			clientSecret: process.env.DISCORD_CLIENT_SECRET,
 			authorization: { params: { scope: "identify guilds" } },
 		}),
@@ -19,18 +17,14 @@ export default NextAuth({
 	callbacks: {
 		async session({ session, token, user }) {
 			// Send properties to the client, like an access_token and user id from a provider.
-			// @ts-ignore
 			session.accessToken = token.accessToken;
-			// @ts-ignore
 			session.user.id = token.id;
-			console.log("session", session);
 			return session;
 		},
 		async jwt({ token, account, profile }) {
 			// Persist the OAuth access_token and or the user id to the token right after signin
 			if (account) {
 				token.accessToken = account.access_token;
-				// @ts-ignore
 				token.id = profile.id;
 			}
 			return token;
