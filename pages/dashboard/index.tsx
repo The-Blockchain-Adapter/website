@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function DashboardPage({ session, guilds }) {
 	const router = useRouter();
 	return (
-		<div>
+		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			{guilds.length === 0 ? (
 				<>
 					<h1>You are not registered on any guild</h1>
@@ -25,16 +25,16 @@ export default function DashboardPage({ session, guilds }) {
 					</h2>
 				</>
 			) : (
-				<>
-					<h1>Select a Guild</h1>
+				<div className="m-6">
+					<h2>Select a Guild</h2>
 					{guilds.map((guild) => (
 						<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
 							<GuildItem guild={guild} />
 						</div>
 					))}
-				</>
+				</div>
 			)}
-		</div>
+		</main>
 	);
 }
 
