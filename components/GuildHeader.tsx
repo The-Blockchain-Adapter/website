@@ -17,17 +17,17 @@ export const GuildHeader = ({ guild }) => {
 		<main className="flex items-center max-w-[1200px]">
 			<button
 				onClick={() => router.push(`/dashboard/${router.query.id}`)}
-				className="text-[#1f2937] m-4 bg-gray-300 rounded-full flex items-center duration-300"
+				className="text-[#1f2937] m-4 bg-gray-300 rounded-full flex items-center hover:scale-100 shadow-md shadow-gray-400"
 			>
 				<img className="rounded-full" src={getSource()} height={55} width={55} />
-				<h3 className="m-3">{guild.guildName}</h3>
+				<h3 className="sm:m-3 m-2 text-lg sm:text-xl">{guild.guildName}</h3>
 			</button>
 			<button
 				onClick={() => router.push(`/dashboard/${router.query.id}/create`)}
 				className="flex justify-center items-center rounded-full duration-300"
 			>
 				<AiFillPlusCircle size={35} />
-				<div className="mx-2">Create a new script </div>
+				<div className="mx-2 text-xs sm:text-sm">Create a new script </div>
 			</button>
 		</main>
 	);

@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
+import { signOut, useSession, signIn } from "next-auth/react";
 
 export function Header() {
 	const { data: session } = useSession();
@@ -24,7 +24,14 @@ export function Header() {
 					The Blockchain Adapter
 				</h1>
 				<div className="flex items-center">
-					<button className="mx-2" onClick={() => router.push(`/dashboard`)}>
+					<button
+						className="mx-2"
+						onClick={() =>
+							session
+								? router.push(`/dashboard`)
+								: signIn("discord", { redirect: true, callbackUrl: "/dashboard" })
+						}
+					>
 						Dashboard
 					</button>
 					<button className="mx-2" onClick={() => router.push(`/docs`)}>
