@@ -10,20 +10,22 @@ export default function DashboardPage({ session, guilds }) {
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			{guilds.length === 0 ? (
-				<>
-					<h1>You are not registered on any guild</h1>
-					<h2>You need to be admin of your guild</h2>
-					<h2>The bot has to be inside the guild</h2>
-					<h2>And you need to type the /init command in a channel</h2>
-					<h2>Otherwise, try to refresh the page or to connect again with discord</h2>
-					<h2>
-						Please check the{" "}
-						<span>
-							<Link href="/docs">documentation</Link>
-						</span>{" "}
-						for more informations
-					</h2>
-				</>
+				<div className="m-10">
+					<h2>You are not registered on any guild...</h2>
+					<div className="mt-3">
+						<p>You need to be admin of your guild.</p>
+						<p>The bot has to be inside the guild.</p>
+						<p>And you need to type the /init command in a channel.</p>
+						<p>Otherwise, try to refresh the page or to connect again with discord.</p>
+						<p>
+							Please check the{" "}
+							<span className="text-blue-500 underline">
+								<Link href="/docs">documentation</Link>
+							</span>{" "}
+							for more informations.
+						</p>
+					</div>
+				</div>
 			) : (
 				<div className="m-10">
 					<h2>Select a Guild:</h2>
