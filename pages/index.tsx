@@ -16,7 +16,7 @@ export default function Home() {
 					</div>
 				</button>
 			)}
-			<p className="my-5">
+			<p className="m-5">
 				En cpp le marché alloue les ressources rares de façon optimale du point de vue
 				collectif (optimum de Pareto). En effet, les ressources rares sont attribuées à la
 				personne qui en a le plus besoin. Cela permet de réduire les inégalités et de
