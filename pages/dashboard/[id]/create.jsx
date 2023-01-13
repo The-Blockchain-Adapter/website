@@ -6,7 +6,7 @@ export default function DashboardIDCreatePage({ session, guild }) {
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			{<GuildHeader guild={guild} />}
-			<p className="my-5">Editeur de code très simple style scratch fixe.</p>
+			<h2 className="mt-5">Create a new script:</h2>
 		</main>
 	);
 }
