@@ -1,12 +1,14 @@
 import { getSession } from "next-auth/react";
 import { authorizeAccess } from "../../../lib/mongo/authoriseAccess";
 import { GuildHeader } from "../../../components/GuildHeader";
+import { Form } from "../../../components/script/Form";
 
 export default function DashboardIDCreatePage({ session, guild }) {
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			{<GuildHeader guild={guild} />}
-			<h2 className="mt-5">Create a new script:</h2>
+			<h2 className="mt-5 mb-3">Create a new script:</h2>
+			{<Form session={session} guild={guild} />}
 		</main>
 	);
 }
