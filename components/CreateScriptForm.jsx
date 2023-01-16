@@ -1,5 +1,3 @@
-// Faire vérifier que le nom du script n'existe pas déjà
-// Faire toutes les vérifications nécessaires avec les erreurs qui vont bien
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 
@@ -13,7 +11,7 @@ export function CreateScriptForm({ session, guild }) {
 
 	const [ScriptType, setScriptType] = useState("");
 	const [IsModal, setIsModal] = useState(false);
-	const [ModalInputsLettersArray, setModalInputs] = useState(["A"]);
+	const [ModalInputsLettersArray, setModalInputs] = useState([]);
 	const [DataNumbersArray, setDataNumbers] = useState([]);
 	const [DataTypesArray, setDataTypes] = useState([]);
 
@@ -47,24 +45,22 @@ export function CreateScriptForm({ session, guild }) {
 						<input type="checkbox" {...register("admin")} />
 					</div>
 					<div>
-						<button onClick={() => setIsModal(!IsModal)}>
-							Show a modal on Discord
-						</button>
+						<button onClick={() => SetModal()}>Show a modal on Discord</button>
 						{IsModal && (
-							<>
+							<div>
 								<div>
 									<label>Modal title</label>
 									<input {...register("modalTitle")} />
 								</div>
 								{ModalInputsLettersArray.map((letter) => (
-									<div>
+									<div key={letter}>
 										<label>Input {letter} Name</label>
-										<input {...register(`modalInputName${letter}`)} />
+										<input {...register(`modalInput${letter}Name`)} />
 									</div>
 								))}
 								<button onClick={() => SetLettersArray(true)}>+ Input</button>
 								<button onClick={() => SetLettersArray(false)}>- Input</button>
-							</>
+							</div>
 						)}
 					</div>
 				</div>
@@ -76,7 +72,7 @@ export function CreateScriptForm({ session, guild }) {
 						<div>
 							<label>Data type</label>
 							<select
-								{...register(`DataType${number}`)}
+								{...register(`dataType${number}`)}
 								onClick={(val) =>
 									setDataTypes((prev) => ({
 										...prev,
@@ -90,8 +86,24 @@ export function CreateScriptForm({ session, guild }) {
 						</div>
 						{DataTypesArray[number] === "view" && (
 							<div>
-								<label>Function Name</label>
-								<input {...register(`dataName${number}`)} />
+								<div>
+									<label>Function Name</label>
+									<input {...register(`dataInput${number}Name`)} />
+								</div>
+								<div>
+									<label>Address</label>
+									<input {...register(`dataInput${number}Address`)} />
+								</div>
+								<div>
+									<label>Blockchain</label>
+									<input {...register(`dataInput${number}Blockchain`)} />
+								</div>
+								<p>
+									Output:{" "}
+									{String.fromCharCode(
+										65 + ModalInputsLettersArray.length + number
+									)}
+								</p>
 							</div>
 						)}
 					</div>
@@ -104,6 +116,12 @@ export function CreateScriptForm({ session, guild }) {
 			</button>
 		</form>
 	);
+
+	function SetModal() {
+		if (IsModal) setModalInputs([]);
+		else setModalInputs(["A"]);
+		return setIsModal(!IsModal);
+	}
 
 	function SetLettersArray(add) {
 		const Letters = ["A", "B", "C", "D"];
