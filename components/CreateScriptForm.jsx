@@ -11,11 +11,11 @@ export function CreateScriptForm({ session, guild }) {
 		formState: { errors },
 	} = useForm();
 
-	const [ScriptType, setScriptType] = useState("command");
+	const [ScriptType, setScriptType] = useState("");
 	const [IsModal, setIsModal] = useState(false);
 	const [ModalInputsLettersArray, setModalInputs] = useState(["A"]);
 	const [DataNumbersArray, setDataNumbers] = useState([]);
-	let [DataTypesArray, setDataTypes] = useState([]);
+	const [DataTypesArray, setDataTypes] = useState([]);
 
 	//SAVE THE DATA
 	const onSubmit = (data) => {
@@ -26,18 +26,18 @@ export function CreateScriptForm({ session, guild }) {
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div>
-				<label>Script type</label>
+				<label>Trigger type</label>
 				<select
 					{...register("scriptType")}
 					onClick={(val) => setScriptType(val.target.value)}
 				>
+					<option value="">. . .</option>
 					<option value="command">command</option>
-					<option value="test">test</option>
 				</select>
 			</div>
 
 			{ScriptType === "command" && (
-				<>
+				<div>
 					<div>
 						<label>Command name</label>
 						<input {...register("commandName")} />
@@ -46,7 +46,6 @@ export function CreateScriptForm({ session, guild }) {
 						<label>Only for admins</label>
 						<input type="checkbox" {...register("admin")} />
 					</div>
-
 					<div>
 						<button onClick={() => setIsModal(!IsModal)}>
 							Show a modal on Discord
@@ -68,36 +67,38 @@ export function CreateScriptForm({ session, guild }) {
 							</>
 						)}
 					</div>
-					<div>
-						{DataNumbersArray.map((number) => (
-							<div>
-								<div>
-									<label>Data {number} type</label>
-									<select
-										{...register(`DataType${number}`)}
-										onClick={(val) =>
-											SetDataTypesArray(val.target.value, number)
-										}
-									>
-										<option value="view">View Function</option>
-										<option value="test">test</option>
-									</select>
-								</div>
-								{DataTypesArray[number] === "view" && (
-									<div>
-										<label>Function Name</label>
-										<input {...register(`dataName${number}`)} />
-									</div>
-								)}
-								{/* {console.log(DataTypesArray[number])} */}
-								{/* {console.log(number)} */}
-							</div>
-						))}
-						<button onClick={() => SetDataArray(true)}>+ Data input</button>
-						<button onClick={() => SetDataArray(false)}>- Data input</button>
-					</div>
-				</>
+				</div>
 			)}
+
+			<div>
+				{DataNumbersArray.map((number) => (
+					<div key={number}>
+						<div>
+							<label>Data type</label>
+							<select
+								{...register(`DataType${number}`)}
+								onClick={(val) =>
+									setDataTypes((prev) => ({
+										...prev,
+										[number]: val.target.value,
+									}))
+								}
+							>
+								<option value="">. . .</option>
+								<option value="view">View Function</option>
+							</select>
+						</div>
+						{DataTypesArray[number] === "view" && (
+							<div>
+								<label>Function Name</label>
+								<input {...register(`dataName${number}`)} />
+							</div>
+						)}
+					</div>
+				))}
+				<button onClick={() => SetDataArray(true)}>+ Data input</button>
+				<button onClick={() => SetDataArray(false)}>- Data input</button>
+			</div>
 			<button>
 				<input type="submit" />
 			</button>
@@ -120,28 +121,13 @@ export function CreateScriptForm({ session, guild }) {
 	function SetDataArray(add) {
 		let array = DataNumbersArray;
 		const length = array.length;
-		let types = DataTypesArray;
 
 		if (add) {
 			array.push(length);
-			types[length] = "view";
 		} else if (!add && length > 0) {
 			array.pop();
-			types[length] = "";
 		}
 
-		setDataTypes(types);
-		setDataNumbers(array);
-		return;
-	}
-
-	function SetDataTypesArray(type, number) {
-		// console.log("setDataTypesArray");
-		console.log(type);
-		console.log(number);
-		let array = DataTypesArray;
-		array[number] = type;
-		setDataTypes(array);
-		return;
+		return setDataNumbers(array);
 	}
 }
