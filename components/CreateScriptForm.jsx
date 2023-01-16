@@ -10,12 +10,17 @@ export function CreateScriptForm({ session, guild }) {
 	} = useForm();
 
 	const [ScriptType, setScriptType] = useState("");
+
 	const [IsModal, setIsModal] = useState(false);
 	const [ModalInputsLettersArray, setModalInputs] = useState([]);
+
 	const [DataNumbersArray, setDataNumbers] = useState([]);
 	const [DataTypesArray, setDataTypes] = useState([]);
+	const [DataInputsArray, setDataInputs] = useState([[]]);
 
-	//SAVE THE DATA
+	const [ActionNumbersArray, setActionNumbers] = useState([""]);
+	const [ActionTypesArray, setActionTypes] = useState([""]);
+
 	const onSubmit = (data) => {
 		console.log("FORM SUBMITTED");
 		console.log(data);
@@ -30,7 +35,7 @@ export function CreateScriptForm({ session, guild }) {
 					onClick={(val) => setScriptType(val.target.value)}
 				>
 					<option value="">. . .</option>
-					<option value="command">command</option>
+					<option value="command">/ Command</option>
 				</select>
 			</div>
 
@@ -45,7 +50,9 @@ export function CreateScriptForm({ session, guild }) {
 						<input type="checkbox" {...register("admin")} />
 					</div>
 					<div>
-						<button onClick={() => SetModal()}>Show a modal on Discord</button>
+						<button onClick={() => SetModal()}>
+							<span>{IsModal ? "-" : "+"}</span> Modal on Discord
+						</button>
 						{IsModal && (
 							<div>
 								<div>
@@ -102,6 +109,24 @@ export function CreateScriptForm({ session, guild }) {
 									<label>Blockchain</label>
 									<input {...register(`dataInput${number}Blockchain`)} />
 								</div>
+								<div>
+									<label>ABI</label>
+									<input {...register(`dataInput${number}ABI`)} />
+								</div>
+								{DataInputsArray[number].map((input) => (
+									<div key={input}>
+										<label>Input {input + 1} value</label>
+										<input {...register(`dataInput${number}Input${input}`)} />
+									</div>
+								))}
+								<button onClick={() => SetDataInputArray(true, number)}>
+									+ Input
+								</button>
+								{DataInputsArray[number].length > 0 && (
+									<button onClick={() => SetDataInputArray(false, number)}>
+										- Input
+									</button>
+								)}
 								<p>
 									Output:{" "}
 									{String.fromCharCode(
@@ -117,6 +142,39 @@ export function CreateScriptForm({ session, guild }) {
 					<button onClick={() => SetDataArray(false)}>- Data input</button>
 				)}
 			</div>
+
+			<div>
+				{ActionNumbersArray.map((number) => (
+					<div key={number}>
+						<div>
+							<label>Action type</label>
+							<select
+								{...register(`dataType${number}`)}
+								onClick={(val) =>
+									setActionTypes((prev) => ({
+										...prev,
+										[number]: val.target.value,
+									}))
+								}
+							>
+								<option value="">. . .</option>
+								<option value="message">Discord message</option>
+							</select>
+						</div>
+						{ActionTypesArray[number] === "message" && (
+							<div>
+								<label>Text</label>
+								<input {...register(`Action${number}Text`)} />
+							</div>
+						)}
+					</div>
+				))}
+				<button onClick={() => SetActionArray(true)}>+ Action</button>
+				{ActionNumbersArray.length > 1 && (
+					<button onClick={() => SetActionArray(false)}>- Action</button>
+				)}
+			</div>
+
 			<button>
 				<input type="submit" />
 			</button>
@@ -146,14 +204,41 @@ export function CreateScriptForm({ session, guild }) {
 
 	function SetDataArray(add) {
 		let array = DataNumbersArray;
+		let inputsArray = DataInputsArray;
 		const length = array.length;
 
 		if (add) {
 			array.push(length);
-		} else if (!add && length > 0) {
+			inputsArray.push([]);
+		} else if (length > 0) {
+			array.pop();
+			inputsArray.pop();
+		}
+		setDataInputs(inputsArray);
+		return setDataNumbers(array);
+	}
+
+	function SetDataInputArray(add, number) {
+		let array = DataInputsArray;
+		const length = array[number].length;
+
+		if (add) {
+			array[number].push(length);
+		} else if (length > 0) {
+			array[number].pop();
+		}
+		return setDataInputs(array);
+	}
+
+	function SetActionArray(add) {
+		let array = ActionNumbersArray;
+		const length = array.length;
+
+		if (add) {
+			array.push(length);
+		} else if (length > 1) {
 			array.pop();
 		}
-
-		return setDataNumbers(array);
+		return setActionNumbers(array);
 	}
 }
