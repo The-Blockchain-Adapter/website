@@ -58,8 +58,12 @@ export function CreateScriptForm({ session, guild }) {
 										<input {...register(`modalInput${letter}Name`)} />
 									</div>
 								))}
-								<button onClick={() => SetLettersArray(true)}>+ Input</button>
-								<button onClick={() => SetLettersArray(false)}>- Input</button>
+								{ModalInputsLettersArray.length < 4 && (
+									<button onClick={() => SetLettersArray(true)}>+ Input</button>
+								)}
+								{ModalInputsLettersArray.length > 1 && (
+									<button onClick={() => SetLettersArray(false)}>- Input</button>
+								)}
 							</div>
 						)}
 					</div>
@@ -109,7 +113,9 @@ export function CreateScriptForm({ session, guild }) {
 					</div>
 				))}
 				<button onClick={() => SetDataArray(true)}>+ Data input</button>
-				<button onClick={() => SetDataArray(false)}>- Data input</button>
+				{DataNumbersArray.length > 0 && (
+					<button onClick={() => SetDataArray(false)}>- Data input</button>
+				)}
 			</div>
 			<button>
 				<input type="submit" />
@@ -118,18 +124,20 @@ export function CreateScriptForm({ session, guild }) {
 	);
 
 	function SetModal() {
-		if (IsModal) setModalInputs([]);
-		else setModalInputs(["A"]);
+		if (IsModal) {
+			setModalInputs([]);
+		} else {
+			setModalInputs(["A"]);
+		}
 		return setIsModal(!IsModal);
 	}
 
 	function SetLettersArray(add) {
-		const Letters = ["A", "B", "C", "D"];
 		let array = ModalInputsLettersArray;
 		const length = array.length;
 
 		if (add && length < 4) {
-			array.push(Letters[length]);
+			array.push(String.fromCharCode(65 + length));
 		} else if (!add && length > 1) {
 			array.pop();
 		}
