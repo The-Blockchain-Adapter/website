@@ -28,6 +28,7 @@ export function CreateScriptForm({ session, guild }) {
 				...data,
 				guildId: guild.guildId,
 				IsModal,
+				ModalInputsLettersArray,
 			}),
 		})
 			.then((response) => response.json())

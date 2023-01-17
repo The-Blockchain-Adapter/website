@@ -7,19 +7,27 @@ export default async function submit(req, res) {
 			return res.json({ msg: "no data" });
 		}
 
-		console.log(data);
+		console.log(data); // To delete
 
 		if (data.scriptType == "command") {
 			// Get the client and the database connection from mongoDB
 			let client = await clientPromise;
 			let db = await client.db();
 			let guild = await db.collection("guilds").findOne({ guildId: data.guildId });
+
+			// Check if the guild exists
 			if (!guild) {
 				return res.json({ msg: "guild not found" });
 			}
 
-			if (guild.commands.length > 20) {
+			// Check if the guild has less than 20 commands
+			if (guild.commands.length >= 20) {
 				return res.json({ msg: "Too many commands" });
+			}
+
+			// Check if the command name is empty
+			if (data.commandName == "") {
+				return res.json({ msg: "command name is empty" });
 			}
 
 			// Check if the command name is already used
@@ -33,13 +41,24 @@ export default async function submit(req, res) {
 				return res.json({ msg: "command name already used" });
 			}
 
-			//
+			// Check if the modal title is empty
+			if (data.IsModal && data.modalTitle == "") {
+				return res.json({ msg: "modal title is empty" });
+			}
 
-			// if (IsModal) {
-			// 	let requiredBoolean = true;
-			// } else {
-			// 	let requiredBoolean = false;
-			// }
+			// Check if the modal inputs are empty
+			const ModalInputsArray = [];
+			for (let i = 0; i < data.ModalInputsLettersArray.length; i++) {
+				if (
+					data.IsModal &&
+					data[`modalInput${data.ModalInputsLettersArray[i]}Name`] == ""
+				) {
+					return res.json({
+						msg: `modal inputs ${data.ModalInputsLettersArray[i]} is empty`,
+					});
+				}
+				ModalInputsArray.push(data.modalInputAName);
+			}
 
 			// Assemble the new command object
 			let newCommand = {
@@ -48,7 +67,7 @@ export default async function submit(req, res) {
 				modal: data.IsModal,
 				modalTitle: data.modalTitle || "",
 				modalInputs: [] || [],
-				modalOutputs: [] || [],
+				modalOutputs: data.ModalInputsLettersArray || [],
 				data: [] || [],
 				action: [],
 			};
