@@ -41,8 +41,7 @@ export default function Home() {
 				revanche, le marché permet de répartir les ressources non rares de façon équitable.
 				En effet, les personnes qui ont le plus besoin de ces ressources sont celles qui en
 				ont le plus besoin. Cela peut être dû à des facteurs externes (maladie, accident,
-				etc.) ou internes (défaut de caractère, etc.). Cela peut aussi être dû à des
-				facteurs aléatoires (malchance,
+				etc.) ou internes (défaut de caractère, etc.).
 			</p>
 		</main>
 	);

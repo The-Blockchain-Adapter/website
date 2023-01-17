@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 export function CreateScriptForm({ session, guild }) {
+	//React hook form stuff to handle the form data and errors
 	const {
 		register,
 		handleSubmit,
@@ -9,25 +10,38 @@ export function CreateScriptForm({ session, guild }) {
 		formState: { errors },
 	} = useForm();
 
+	//Show or hide some modal inputs based on theses values
 	const [ScriptType, setScriptType] = useState("");
-
 	const [IsModal, setIsModal] = useState(false);
 	const [ModalInputsLettersArray, setModalInputs] = useState([]);
-
 	const [DataNumbersArray, setDataNumbers] = useState([]);
 	const [DataTypesArray, setDataTypes] = useState([]);
 	const [DataInputsArray, setDataInputs] = useState([[]]);
-
 	const [ActionNumbersArray, setActionNumbers] = useState([""]);
 	const [ActionTypesArray, setActionTypes] = useState([""]);
 
-	const onSubmit = (data) => {
-		console.log("FORM SUBMITTED");
-		console.log(data);
+	//Handle the form submit
+	const onSubmit = async (data) => {
+		fetch("/api/submit", {
+			method: "POST",
+			body: JSON.stringify({
+				...data,
+				guildId: guild.guildId,
+				IsModal,
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				console.log(data);
+				// ---------------------------------------- Handle data ----------------------------------------
+			})
+			.catch((err) => {
+				console.log(err.message);
+			});
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
+		<form onSubmit={handleSubmit(() => {})}>
 			<div>
 				<label>Trigger type</label>
 				<select
@@ -149,7 +163,7 @@ export function CreateScriptForm({ session, guild }) {
 						<div>
 							<label>Action type</label>
 							<select
-								{...register(`dataType${number}`)}
+								{...register(`actionType${number}`)}
 								onClick={(val) =>
 									setActionTypes((prev) => ({
 										...prev,
@@ -176,7 +190,10 @@ export function CreateScriptForm({ session, guild }) {
 			</div>
 
 			<button>
-				<input type="submit" />
+				<input
+					onClick={handleSubmit(onSubmit /*(data) => submit(data) /*setData(data)*/)}
+					type="submit"
+				/>
 			</button>
 		</form>
 	);
