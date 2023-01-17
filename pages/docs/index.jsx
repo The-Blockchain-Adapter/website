@@ -18,7 +18,10 @@ export default function DocsPage() {
 			</div>
 			<p className="my-5">Use la commande: /init</p>
 			<p className="my-5">Connectez votre compte discord sur ce site web</p>
-			<p className="my-5">Clickez sur le serveur de votre choix</p>
+			<p className="my-5">
+				Clickez sur le serveur de votre choix (Vérifier que vos cookies ne soient pas
+				désactivés)
+			</p>
 			<p className="my-5">Clickez sur créer un nouveau script</p>
 			<p className="my-5">Choisisez ce qui vous plait (Mettre un example)</p>
 			<p className="my-5">Enregistrez le script</p>

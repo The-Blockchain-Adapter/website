@@ -133,9 +133,12 @@ export function CreateScriptForm({ session, guild }) {
 										<input {...register(`dataInput${number}Input${input}`)} />
 									</div>
 								))}
-								<button onClick={() => SetDataInputArray(true, number)}>
-									+ Input
-								</button>
+
+								{DataInputsArray[number].length < 10 && (
+									<button onClick={() => SetDataInputArray(true, number)}>
+										+ Input
+									</button>
+								)}
 								{DataInputsArray[number].length > 0 && (
 									<button onClick={() => SetDataInputArray(false, number)}>
 										- Input
@@ -151,7 +154,9 @@ export function CreateScriptForm({ session, guild }) {
 						)}
 					</div>
 				))}
-				<button onClick={() => SetDataArray(true)}>+ Data input</button>
+				{DataNumbersArray.length < 10 && (
+					<button onClick={() => SetDataArray(true)}>+ Data input</button>
+				)}
 				{DataNumbersArray.length > 0 && (
 					<button onClick={() => SetDataArray(false)}>- Data input</button>
 				)}
@@ -183,18 +188,14 @@ export function CreateScriptForm({ session, guild }) {
 						)}
 					</div>
 				))}
-				<button onClick={() => SetActionArray(true)}>+ Action</button>
+				{ActionNumbersArray.length < 10 && (
+					<button onClick={() => SetActionArray(true)}>+ Action</button>
+				)}
 				{ActionNumbersArray.length > 1 && (
 					<button onClick={() => SetActionArray(false)}>- Action</button>
 				)}
 			</div>
-
-			<button>
-				<input
-					onClick={handleSubmit(onSubmit /*(data) => submit(data) /*setData(data)*/)}
-					type="submit"
-				/>
-			</button>
+			<button onClick={handleSubmit(onSubmit)}>Create the Script</button>
 		</form>
 	);
 
@@ -224,10 +225,10 @@ export function CreateScriptForm({ session, guild }) {
 		let inputsArray = DataInputsArray;
 		const length = array.length;
 
-		if (add) {
+		if (add && length < 10) {
 			array.push(length);
 			inputsArray.push([]);
-		} else if (length > 0) {
+		} else if (!add && length > 0) {
 			array.pop();
 			inputsArray.pop();
 		}
@@ -239,9 +240,9 @@ export function CreateScriptForm({ session, guild }) {
 		let array = DataInputsArray;
 		const length = array[number].length;
 
-		if (add) {
+		if (add && length < 10) {
 			array[number].push(length);
-		} else if (length > 0) {
+		} else if (!add && length > 0) {
 			array[number].pop();
 		}
 		return setDataInputs(array);
@@ -251,9 +252,9 @@ export function CreateScriptForm({ session, guild }) {
 		let array = ActionNumbersArray;
 		const length = array.length;
 
-		if (add) {
+		if (add && length < 10) {
 			array.push(length);
-		} else if (length > 1) {
+		} else if (!add && length > 1) {
 			array.pop();
 		}
 		return setActionNumbers(array);
