@@ -18,10 +18,14 @@ export default async function submit(req, res) {
 				return res.json({ msg: "guild not found" });
 			}
 
+			if (guild.commands.length > 20) {
+				return res.json({ msg: "Too many commands" });
+			}
+
 			// Check if the command name is already used
 			if (
 				guild.commands.find((command) => {
-					if (command.commandName == data.commandName) {
+					if (command.name == data.commandName) {
 						return true;
 					}
 				})
