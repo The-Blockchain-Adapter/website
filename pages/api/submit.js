@@ -9,6 +9,7 @@ export default async function submit(req, res) {
 
 		console.log(data); // To delete
 
+		/*
 		if (data.scriptType == "command") {
 			// Get the client and the database connection from mongoDB
 			let client = await clientPromise;
@@ -88,6 +89,7 @@ export default async function submit(req, res) {
 		} else {
 			return res.json({ msg: "not a command script" });
 		}
+		*/
 	} else {
 		return res.status(500).json({ msg: "This needs to be a post request" });
 	}
