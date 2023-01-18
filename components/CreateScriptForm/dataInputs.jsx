@@ -12,7 +12,11 @@ export const NestedInputs = ({ nestIndex, control, register }) => {
 				return (
 					<div key={field.id}>
 						<label>Input {index + 1} value</label>
-						<input name={`test[${nestIndex}].input[${index}].value`} />
+						<input
+							{...register(`Data[${nestIndex}].input[${index}].value`, {
+								required: true,
+							})}
+						/>
 						<button onClick={() => remove(index)}>Delete Input</button>
 					</div>
 				);

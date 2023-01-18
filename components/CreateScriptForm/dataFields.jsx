@@ -22,7 +22,7 @@ export const DataFields = ({ control, register, modalInputFields }) => {
 						<label>
 							<span>Data type</span>
 							<select
-								{...register(`Data.${index}.type`)}
+								{...register(`Data.${index}.type`, { required: true })}
 								onClick={(val) =>
 									setDataTypes((prev) => ({
 										...prev,
@@ -39,19 +39,27 @@ export const DataFields = ({ control, register, modalInputFields }) => {
 							<div>
 								<div>
 									<label>Function Name</label>
-									<input {...register(`Data.${index}.name`)} />
+									<input
+										{...register(`Data.${index}.name`, { required: true })}
+									/>
 								</div>
 								<div>
 									<label>Address</label>
-									<input {...register(`Data.${index}.address`)} />
+									<input
+										{...register(`Data.${index}.address`, { required: true })}
+									/>
 								</div>
 								<div>
 									<label>Blockchain</label>
-									<input {...register(`Data.${index}.blockchain`)} />
+									<input
+										{...register(`Data.${index}.blockchain`, {
+											required: true,
+										})}
+									/>
 								</div>
 								<div>
 									<label>ABI</label>
-									<input {...register(`Data.${index}.ABI`)} />
+									<input {...register(`Data.${index}.ABI`, { required: true })} />
 								</div>
 								<NestedInputs nestIndex={index} {...{ control, register }} />
 								<p>

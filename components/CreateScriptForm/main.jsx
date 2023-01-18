@@ -57,7 +57,7 @@ export function CreateScriptForm({ session, guild }) {
 			<div>
 				<label>Trigger type</label>
 				<select
-					{...register("scriptType")}
+					{...register("scriptType", { required: true })}
 					onClick={(val) => setScriptType(val.target.value)}
 				>
 					<option value="command">/ Command</option>
@@ -68,7 +68,7 @@ export function CreateScriptForm({ session, guild }) {
 				<div>
 					<div>
 						<label>Command name</label>
-						<input {...register("commandName")} />
+						<input {...register("commandName", { required: true })} />
 					</div>
 					<div>
 						<label>Only for admins</label>
@@ -82,7 +82,7 @@ export function CreateScriptForm({ session, guild }) {
 							<div>
 								<div>
 									<label>Modal title</label>
-									<input {...register("modalTitle")} />
+									<input {...register("modalTitle", { required: true })} />
 								</div>
 								{modalInputFields.map((field, index) => {
 									return (
@@ -91,7 +91,11 @@ export function CreateScriptForm({ session, guild }) {
 												<span>
 													Input {String.fromCharCode(65 + index)} Text
 												</span>
-												<input {...register(`ModalInput.${index}.text`)} />
+												<input
+													{...register(`ModalInput.${index}.text`, {
+														required: true,
+													})}
+												/>
 											</label>
 											<button onClick={() => modalInputRemove(index)}>
 												delete

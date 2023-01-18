@@ -21,7 +21,9 @@ export const ActionFields = ({ control, register }) => {
 						<label>
 							<span>Action type</span>
 							<select
-								{...register(`Action.${index}.type`)}
+								{...register(`Action.${index}.type`, {
+									required: true,
+								})}
 								onClick={(val) =>
 									setActionTypes((prev) => ({
 										...prev,
@@ -38,7 +40,11 @@ export const ActionFields = ({ control, register }) => {
 							<div>
 								<div>
 									<label>Text</label>
-									<input {...register(`Action.${index}.text`)} />
+									<input
+										{...register(`Action.${index}.text`, {
+											required: true,
+										})}
+									/>
 								</div>
 							</div>
 						)}
