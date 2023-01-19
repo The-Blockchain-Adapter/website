@@ -3,7 +3,7 @@ import { TriggerField } from "./triggerField";
 import { DataFields } from "./dataFields";
 import { ActionFields } from "./actionFields";
 
-export function CreateScriptForm({ session, guild }) {
+export function CreateScriptForm({ guild }) {
 	//React hook form stuff to handle the form data and errors
 	const {
 		register,
