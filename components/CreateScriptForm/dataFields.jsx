@@ -1,8 +1,9 @@
 import { useFieldArray } from "react-hook-form";
 import { useState } from "react";
 import { NestedInputs } from "./dataInputs";
+import { modalInputNumber } from "./triggerField";
 
-export const DataFields = ({ control, register, errors, modalInputFields }) => {
+export const DataFields = ({ control, register, errors }) => {
 	const {
 		fields: dataFields,
 		append: dataAppend,
@@ -91,10 +92,7 @@ export const DataFields = ({ control, register, errors, modalInputFields }) => {
 									nestIndex={index}
 									{...{ control, register, errors }}
 								/>
-								<p>
-									Output:{" "}
-									{String.fromCharCode(65 + modalInputFields.length + index)}
-								</p>
+								<p>Output: {String.fromCharCode(65 + modalInputNumber + index)}</p>
 							</div>
 						)}
 					</div>
