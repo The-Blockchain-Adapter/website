@@ -19,6 +19,7 @@ export function CreateScriptForm({ session, guild }) {
 		},
 	});
 
+	//Handle the modal input fields
 	const {
 		fields: modalInputFields,
 		append: modalInputAppend,
@@ -26,6 +27,7 @@ export function CreateScriptForm({ session, guild }) {
 	} = useFieldArray({
 		name: "ModalInput",
 		control,
+		rules: { min: 1 },
 	});
 
 	//Show or hide some modal inputs based on theses values
@@ -39,7 +41,6 @@ export function CreateScriptForm({ session, guild }) {
 			body: JSON.stringify({
 				...data,
 				guildId: guild.guildId,
-				IsModal,
 			}),
 		})
 			.then((response) => response.json())
@@ -52,38 +53,67 @@ export function CreateScriptForm({ session, guild }) {
 			});
 	};
 
+	// If the user wants to see the errors on the console after submitting form
+	const onError = (errors) => {
+		console.log("ERRORS: ", errors);
+	};
+
+	//Main form component
 	return (
 		<form onSubmit={handleSubmit(() => {})}>
 			<div>
 				<label>Trigger type</label>
 				<select
-					{...register("scriptType", { required: true })}
+					{...register("scriptType", { required: "Script type is required" })}
 					onClick={(val) => setScriptType(val.target.value)}
 				>
 					<option value="command">/ Command</option>
 				</select>
+				<p>{errors.scriptType?.message}</p>
 			</div>
 
 			{ScriptType === "command" && (
 				<div>
 					<div>
 						<label>Command name</label>
-						<input {...register("commandName", { required: true })} />
+						<input
+							{...register("commandName", {
+								required: "Command name is required",
+								maxLength: {
+									value: 30,
+									message: "Maximum command name length is 30",
+								},
+								pattern: {
+									value: /^[a-z]+$/,
+									message: "Only write lower case letters without spaces",
+								},
+							})}
+						/>
 					</div>
+					<p>{errors.commandName?.message}</p>
 					<div>
 						<label>Only for admins</label>
 						<input type="checkbox" {...register("admin")} />
 					</div>
 					<div>
 						<button onClick={() => SetModal()}>
-							<span>{IsModal ? "-" : "+"}</span> Modal on Discord
+							<span>{IsModal ? "-" : "+"}</span> Modal
 						</button>
 						{IsModal && (
 							<div>
 								<div>
 									<label>Modal title</label>
-									<input {...register("modalTitle", { required: true })} />
+									<input
+										{...register("modalTitle", {
+											required: "Modal title is required",
+											maxLength: {
+												value: 100,
+												message: "Maximum modal title length is 100",
+											},
+										})}
+									/>
 								</div>
+								<p>{errors.modalTitle?.message}</p>
 								{modalInputFields.map((field, index) => {
 									return (
 										<div key={field.id}>
@@ -93,13 +123,21 @@ export function CreateScriptForm({ session, guild }) {
 												</span>
 												<input
 													{...register(`ModalInput.${index}.text`, {
-														required: true,
+														required: "Input text is required",
+														maxLength: {
+															value: 100,
+															message:
+																"Maximum modal text length is 100",
+														},
 													})}
 												/>
 											</label>
-											<button onClick={() => modalInputRemove(index)}>
-												delete
-											</button>
+											{index > 0 && (
+												<button onClick={() => modalInputRemove(index)}>
+													X
+												</button>
+											)}
+											<p>{errors.ModalInput?.[index]?.text?.message}</p>
 										</div>
 									);
 								})}
@@ -120,14 +158,26 @@ export function CreateScriptForm({ session, guild }) {
 				</div>
 			)}
 
-			<DataFields {...{ control, register, modalInputFields }} />
+			<DataFields {...{ control, register, errors, modalInputFields }} />
 
-			<ActionFields {...{ control, register }} />
+			<ActionFields {...{ control, register, errors }} />
 
-			<button onClick={handleSubmit(onSubmit)}>Create the Script</button>
+			<button
+				onClick={(e) =>
+					handleSubmit(
+						onSubmit,
+						onError
+					)(e).catch((e) => {
+						console.log("e", e);
+					})
+				}
+			>
+				Create the Script
+			</button>
 		</form>
 	);
 
+	// Show or hide the discord modal
 	function SetModal() {
 		if (IsModal) {
 			reset({ ...getValues, ModalInput: [] });

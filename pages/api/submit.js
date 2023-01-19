@@ -1,15 +1,18 @@
 import clientPromise from "../../lib/mongo/mongodb";
 
 export default async function submit(req, res) {
-	if (req.method === "POST") {
-		const data = JSON.parse(req?.body);
-		if (!data) {
-			return res.json({ msg: "no data" });
-		}
+	if (req.method !== "POST") {
+		return res.status(500).json({ msg: "This needs to be a post request" });
+	}
 
-		console.log(data); // To delete
+	const data = JSON.parse(req?.body);
+	if (!data) {
+		return res.json({ msg: "no data" });
+	}
 
-		/*
+	console.log(data); // To delete
+
+	/*
 		if (data.scriptType == "command") {
 			// Get the client and the database connection from mongoDB
 			let client = await clientPromise;
@@ -90,7 +93,4 @@ export default async function submit(req, res) {
 			return res.json({ msg: "not a command script" });
 		}
 		*/
-	} else {
-		return res.status(500).json({ msg: "This needs to be a post request" });
-	}
 }

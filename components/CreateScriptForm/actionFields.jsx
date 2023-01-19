@@ -1,7 +1,7 @@
 import { useFieldArray } from "react-hook-form";
 import { useState } from "react";
 
-export const ActionFields = ({ control, register }) => {
+export const ActionFields = ({ control, register, errors }) => {
 	const {
 		fields: actionFields,
 		append: actionAppend,
@@ -9,6 +9,7 @@ export const ActionFields = ({ control, register }) => {
 	} = useFieldArray({
 		name: "Action",
 		control,
+		rules: { min: 1 },
 	});
 
 	const [ActionTypesArray, setActionTypes] = useState([""]);
@@ -18,34 +19,37 @@ export const ActionFields = ({ control, register }) => {
 			{actionFields.map((field, index) => {
 				return (
 					<div key={field.id}>
-						<label>
-							<span>Action type</span>
-							<select
-								{...register(`Action.${index}.type`, {
-									required: true,
-								})}
-								onClick={(val) =>
-									setActionTypes((prev) => ({
-										...prev,
-										[index]: val.target.value,
-									}))
-								}
-							>
-								<option value="message">Discord message</option>
-							</select>
-						</label>
-						<button onClick={() => actionRemove(index)}>Delete</button>
+						<label>Action type</label>
+						<select
+							{...register(`Action.${index}.type`, {
+								required: "Action type is required",
+							})}
+							onClick={(val) =>
+								setActionTypes((prev) => ({
+									...prev,
+									[index]: val.target.value,
+								}))
+							}
+						>
+							<option value="message">Discord message</option>
+						</select>
+
+						{index > 0 && <button onClick={() => actionRemove(index)}>X</button>}
+						<p>{errors.Action?.[index]?.type?.message}</p>
 
 						{ActionTypesArray[index] === "message" && (
 							<div>
-								<div>
-									<label>Text</label>
-									<input
-										{...register(`Action.${index}.text`, {
-											required: true,
-										})}
-									/>
-								</div>
+								<label>Text</label>
+								<input
+									{...register(`Action.${index}.text`, {
+										required: "Text is required",
+										maxLength: {
+											value: 500,
+											message: "Maximum function name length is 500",
+										},
+									})}
+								/>
+								<p>{errors.Action?.[index]?.text?.message}</p>
 							</div>
 						)}
 					</div>
