@@ -13,18 +13,18 @@ export default async function submit(req, res) {
 	// Get the client and the database connection from mongoDB
 	let client = await clientPromise;
 	let db = await client.db();
-	let guild = await db.collection("guilds").findOne({ guildId: data.guildId });
+	let guild = await db.collection("guilds").findOne({ discordId: data.discordId });
 	if (!guild) {
 		return res.json({ msg: "guild not found" });
 	}
+	console.log(data); // -------------------------------------------- To delete -------------------------------------------
 
 	// Save the new script depending on its type
 	if (data.scriptType == "command") {
 		let commands = guild.commands;
-		console.log(data); // -------------------------------------------- To delete -------------------------------------------
 		commands.push(data); //----------------------- UNcomment this line to save the command in the database -----------------
 		await db.collection("guilds").updateOne(
-			{ guildId: data.guildId },
+			{ discordId: data.discordId },
 			{
 				$set: {
 					commands: commands,

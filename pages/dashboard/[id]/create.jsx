@@ -5,7 +5,7 @@ import { CreateScriptForm } from "../../../components/CreateScriptForm/main";
 
 export default function DashboardIDCreatePage({ session, guild }) {
 	// Check if the guild has less than 20 scripts
-	const guildHasTooManyScripts = guild.commands.length >= 20;
+	const guildHasTooManyScripts = guild.scripts.length >= 20;
 
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
@@ -13,7 +13,7 @@ export default function DashboardIDCreatePage({ session, guild }) {
 			{guildHasTooManyScripts ? (
 				<>
 					<h2 className="mt-5 mb-3">
-						You have reached the maximum number of commands for this guild
+						You have reached the maximum number of scripts for this guild
 					</h2>
 				</>
 			) : (

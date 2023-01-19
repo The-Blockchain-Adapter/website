@@ -6,8 +6,8 @@ export const GuildHeader = ({ guild }) => {
 
 	// Show the correct guild icon
 	function getSource() {
-		if (guild.guildIcon != "None.") {
-			return guild.guildIcon;
+		if (guild.icon != "None.") {
+			return guild.icon;
 		} else {
 			return "/default_guild_icon.png";
 		}
@@ -20,7 +20,7 @@ export const GuildHeader = ({ guild }) => {
 				className="text-[#1f2937] mr-0 sm:mr-4 m-4 bg-gray-300 rounded-full flex items-center hover:scale-100 shadow-md shadow-gray-400"
 			>
 				<img className="rounded-full" src={getSource()} height={55} width={55} />
-				<h3 className="m-3 text-lg sm:text-xl">{guild.guildName}</h3>
+				<h3 className="m-3 text-lg sm:text-xl">{guild.name}</h3>
 			</button>
 			<button
 				onClick={() => router.push(`/dashboard/${router.query.id}/create`)}

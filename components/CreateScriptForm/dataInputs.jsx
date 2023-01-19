@@ -3,7 +3,7 @@ import { useFieldArray } from "react-hook-form";
 export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 	const { fields, remove, append } = useFieldArray({
 		control,
-		name: `Data[${nestIndex}].input`,
+		name: `data[${nestIndex}].inputs`,
 	});
 
 	return (
@@ -13,7 +13,7 @@ export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 					<div key={field.id}>
 						<label>Input {index + 1} value</label>
 						<input
-							{...register(`Data[${nestIndex}].input[${index}].value`, {
+							{...register(`data.${nestIndex}.inputs[${index}]`, {
 								required: "Input value is required",
 								maxLength: {
 									value: 500,
@@ -24,7 +24,7 @@ export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 						<button type="button" onClick={() => remove(index)}>
 							X
 						</button>
-						<p>{errors.Data?.[nestIndex]?.input?.[index]?.value?.message}</p>
+						<p>{errors.data?.[nestIndex]?.inputs?.[index]?.message}</p>
 					</div>
 				);
 			})}
@@ -34,7 +34,7 @@ export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 					type="button"
 					onClick={() =>
 						append({
-							input: "",
+							inputs: "",
 						})
 					}
 				>

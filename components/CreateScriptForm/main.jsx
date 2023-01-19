@@ -14,8 +14,8 @@ export function CreateScriptForm({ guild }) {
 		control,
 	} = useForm({
 		defaultValues: {
-			scriptType: "",
-			Action: [{ type: "" }],
+			trigger: { type: "" },
+			action: [{ type: "" }],
 		},
 	});
 
@@ -25,7 +25,7 @@ export function CreateScriptForm({ guild }) {
 			method: "POST",
 			body: JSON.stringify({
 				...data,
-				guildId: guild.guildId,
+				discordId: guild.discordId,
 			}),
 		})
 			.then((response) => response.json())

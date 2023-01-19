@@ -7,7 +7,7 @@ export const ActionFields = ({ control, register, errors }) => {
 		append: actionAppend,
 		remove: actionRemove,
 	} = useFieldArray({
-		name: "Action",
+		name: "action",
 		control,
 		rules: { min: 1 },
 	});
@@ -21,7 +21,7 @@ export const ActionFields = ({ control, register, errors }) => {
 					<div key={field.id}>
 						<label>Action type</label>
 						<select
-							{...register(`Action.${index}.type`, {
+							{...register(`action.${index}.type`, {
 								required: "Action type is required",
 							})}
 							onClick={(val) =>
@@ -33,19 +33,18 @@ export const ActionFields = ({ control, register, errors }) => {
 						>
 							<option value="message">Discord message</option>
 						</select>
-
 						{index > 0 && (
 							<button type="button" onClick={() => actionRemove(index)}>
 								X
 							</button>
 						)}
-						<p>{errors.Action?.[index]?.type?.message}</p>
+						<p>{errors.action?.[index]?.type?.message}</p>
 
 						{ActionTypesArray[index] === "message" && (
 							<div>
 								<label>Text</label>
 								<input
-									{...register(`Action.${index}.text`, {
+									{...register(`action.${index}.text`, {
 										required: "Text is required",
 										maxLength: {
 											value: 500,
@@ -53,7 +52,7 @@ export const ActionFields = ({ control, register, errors }) => {
 										},
 									})}
 								/>
-								<p>{errors.Action?.[index]?.text?.message}</p>
+								<p>{errors.action?.[index]?.text?.message}</p>
 							</div>
 						)}
 					</div>

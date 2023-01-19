@@ -11,7 +11,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 		append: modalInputAppend,
 		remove: modalInputRemove,
 	} = useFieldArray({
-		name: "ModalInput",
+		name: "trigger.modalInputs",
 		control,
 		rules: { min: 1 },
 	});
@@ -20,7 +20,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 	modalInputNumber = modalInputFields.length;
 
 	//Show or hide some modal inputs based on theses values
-	const [ScriptType, setScriptType] = useState("");
+	const [TriggerType, setTriggerType] = useState("");
 	const [IsModal, setIsModal] = useState(false);
 
 	return (
@@ -28,20 +28,20 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 			<div>
 				<label>Trigger type</label>
 				<select
-					{...register("scriptType", { required: "Script type is required" })}
-					onClick={(val) => setScriptType(val.target.value)}
+					{...register("trigger.type", { required: "Trigger type is required" })}
+					onClick={(val) => setTriggerType(val.target.value)}
 				>
 					<option value="command">/ Command</option>
 				</select>
-				<p>{errors.scriptType?.message}</p>
+				<p>{errors.trigger?.type?.message}</p>
 			</div>
 
-			{ScriptType === "command" && (
+			{TriggerType === "command" && (
 				<div>
 					<div>
 						<label>Command name</label>
 						<input
-							{...register("commandName", {
+							{...register("trigger.name", {
 								required: "Command name is required",
 								maxLength: {
 									value: 30,
@@ -54,10 +54,10 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 							})}
 						/>
 					</div>
-					<p>{errors.commandName?.message}</p>
+					<p>{errors.trigger?.name?.message}</p>
 					<div>
 						<label>Only for admins</label>
-						<input type="checkbox" {...register("admin")} />
+						<input type="checkbox" {...register("trigger.onlyAdmin")} />
 					</div>
 					<div>
 						<button type="button" onClick={() => SetModal()}>
@@ -68,7 +68,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 								<div>
 									<label>Modal title</label>
 									<input
-										{...register("modalTitle", {
+										{...register("trigger.modalTitle", {
 											required: "Modal title is required",
 											maxLength: {
 												value: 100,
@@ -77,25 +77,22 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 										})}
 									/>
 								</div>
-								<p>{errors.modalTitle?.message}</p>
+								<p>{errors.trigger?.modalTitle?.message}</p>
 								{modalInputFields.map((field, index) => {
 									return (
 										<div key={field.id}>
 											<label>
-												<span>
-													Input {String.fromCharCode(65 + index)} Text
-												</span>
-												<input
-													{...register(`ModalInput.${index}.text`, {
-														required: "Input text is required",
-														maxLength: {
-															value: 100,
-															message:
-																"Maximum modal text length is 100",
-														},
-													})}
-												/>
+												Input {String.fromCharCode(65 + index)} Text
 											</label>
+											<input
+												{...register(`trigger.modalInputs.${index}.text`, {
+													required: "Input text is required",
+													maxLength: {
+														value: 100,
+														message: "Maximum modal text length is 100",
+													},
+												})}
+											/>
 											{index > 0 && (
 												<button
 													type="button"
@@ -104,7 +101,12 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 													X
 												</button>
 											)}
-											<p>{errors.ModalInput?.[index]?.text?.message}</p>
+											<p>
+												{
+													errors.trigger?.modalInputs?.[index]?.text
+														?.message
+												}
+											</p>
 										</div>
 									);
 								})}

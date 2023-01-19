@@ -9,7 +9,7 @@ export const DataFields = ({ control, register, errors }) => {
 		append: dataAppend,
 		remove: dataRemove,
 	} = useFieldArray({
-		name: "Data",
+		name: "data",
 		control,
 	});
 
@@ -22,7 +22,7 @@ export const DataFields = ({ control, register, errors }) => {
 					<div key={field.id}>
 						<label>Data type</label>
 						<select
-							{...register(`Data.${index}.type`, {
+							{...register(`data.${index}.type`, {
 								required: "Data type is required",
 							})}
 							onClick={(val) =>
@@ -37,14 +37,14 @@ export const DataFields = ({ control, register, errors }) => {
 						<button type="button" onClick={() => dataRemove(index)}>
 							X
 						</button>
-						<p>{errors.Data?.[index]?.type?.message}</p>
+						<p>{errors.data?.[index]?.type?.message}</p>
 
 						{DataTypesArray[index] === "view" && (
 							<div>
 								<div>
 									<label>Function Name</label>
 									<input
-										{...register(`Data.${index}.name`, {
+										{...register(`data.${index}.name`, {
 											required: "Function Name is required",
 											maxLength: {
 												value: 100,
@@ -52,12 +52,12 @@ export const DataFields = ({ control, register, errors }) => {
 											},
 										})}
 									/>
-									<p>{errors.Data?.[index]?.name?.message}</p>
+									<p>{errors.data?.[index]?.name?.message}</p>
 								</div>
 								<div>
 									<label>Address</label>
 									<input
-										{...register(`Data.${index}.address`, {
+										{...register(`data.${index}.address`, {
 											required: "Address is required",
 											maxLength: {
 												value: 42,
@@ -65,12 +65,12 @@ export const DataFields = ({ control, register, errors }) => {
 											},
 										})}
 									/>
-									<p>{errors.Data?.[index]?.address?.message}</p>
+									<p>{errors.data?.[index]?.address?.message}</p>
 								</div>
 								<div>
 									<label>Blockchain</label>
 									<select
-										{...register(`Data.${index}.blockchain`, {
+										{...register(`data.${index}.blockchain`, {
 											required: "Blockchain is required",
 										})}
 									>
@@ -80,7 +80,7 @@ export const DataFields = ({ control, register, errors }) => {
 								<div>
 									<label>ABI</label>
 									<input
-										{...register(`Data.${index}.ABI`, {
+										{...register(`data.${index}.abi`, {
 											required: "ABI is required",
 											maxLength: {
 												value: 10000,
@@ -88,7 +88,7 @@ export const DataFields = ({ control, register, errors }) => {
 											},
 										})}
 									/>
-									<p>{errors.Data?.[index]?.ABI?.message}</p>
+									<p>{errors.data?.[index]?.abi?.message}</p>
 								</div>
 								<NestedInputs
 									nestIndex={index}

@@ -1,0 +1,158 @@
+{
+    trigger: {
+      type: 'command',
+      modalInputs: [
+        '[objechtt gOhtbject]',
+        '[objetbfnytt Ohtgbject]',
+        '[object Object]'
+      ],
+      name: 'yntbv',
+      onlyAdmin: false,
+      modalTitle: 'hytggrhtg'
+    },
+    Action: [ { type: '' } ],
+    action: [ { type: 'message', text: 'j-htg' } ],
+    data: [
+      {
+        type: 'view',
+        name: 'jhtbg',
+        address: 'yhtbg',
+        blockchain: 'goerli',
+        abi: 'yhtg',
+        inputs: [Array]
+      }
+    ],
+    Data: [ { input: [Array] } ],
+    discordId: '979917930533908510'
+  }
+
+
+
+  {
+    trigger: {
+      type: 'command',
+      modalInputs: [
+        '[objechtt gOhtbject]',
+        '[objetbfnytt Ohtgbject]',
+        '[object Object]'
+      ],
+      name: 'yntbv',
+      onlyAdmin: false,
+      modalTitle: 'hytggrhtg'
+    },
+    Action: [ { type: '' } ],
+    action: [ { type: 'message', text: 'j-htg' } ],
+    data: [
+      {
+        type: 'view',
+        name: 'jhtbg',
+        address: 'yhtbg',
+        blockchain: 'goerli',
+        abi: 'yhtg',
+        inputs: [Array]
+      }
+    ],
+    Data: [ { input: [Array] } ],
+    discordId: '979917930533908510'
+  }
+
+
+  {
+    trigger: {
+      type: 'command',
+      modalInputs: [],
+      name: 'jhtgrfv',
+      onlyAdmin: false
+    },
+    action: [ { type: 'message', text: 'jèh-ygt(rf' } ],
+    data: [
+      {
+        type: 'view',
+        name: 'jyhg',
+        address: ',uynjhtg',
+        blockchain: 'goerli',
+        abi: ',ujnyhtg',
+        inputs: [Array]
+      }
+    ],
+    discordId: '979917930533908510'
+  }
+
+
+  
+
+{
+trigger: {
+  type: 'command',
+  modalInputs: [
+    '[objecyhtgt Object]',
+    '[object nhtgObject]',
+    '[object ,hngbObject]'
+  ],
+  name: 'jhtgrfv',
+  onlyAdmin: false,
+  modalTitle: 'nhtg'
+},
+action: [ { type: 'message', text: 'jèh-ygt(rf' } ],
+data: [
+  {
+    type: 'view',
+    name: 'jyhg',
+    address: ',uynjhtg',
+    blockchain: 'goerli',
+    abi: ',ujnyhtg',
+    inputs: [Array]
+  }
+],
+discordId: '979917930533908510'
+}
+
+
+{
+  trigger: {
+    type: 'command',
+    modalInputs: [ [Object], [Object], [Object] ],
+    name: 'jhtgrfv',
+    onlyAdmin: false,
+    modalTitle: 'nhtg'
+  },
+  action: [ { type: 'message', text: 'jèh-ygt(rf' } ],
+  data: [
+    {
+      type: 'view',
+      name: 'jyhg',
+      address: ',uynjhtg',
+      blockchain: 'goerli',
+      abi: ',ujnyhtg',
+      inputs: [Array]
+    }
+  ],
+  discordId: '979917930533908510'
+}
+
+
+{
+  trigger: {
+    type: 'command',
+    modalInputs: [ [Object], [Object], [Object] ],
+    name: 'uyyhbtgrfd',
+    onlyAdmin: true,
+    modalTitle: 'èuy-('
+  },
+  action: [
+    { type: 'message', text: 'ergngh' },
+    { type: 'message', text: 'rtgnhgrt' },
+    { type: 'message', text: '(htyhgr' }
+  ],
+  data: [
+    {
+      type: 'view',
+      name: 'uèy-t',
+      address: 'kjèu-y',
+      blockchain: 'goerli',
+      abi: 'k_jèu-y',
+      inputs: [Array]
+    }
+  ],
+  discordId: '979917930533908510'
+}
