@@ -85,7 +85,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 												Input {String.fromCharCode(65 + index)} Text
 											</label>
 											<input
-												{...register(`trigger.modalInputs.${index}.text`, {
+												{...register(`trigger.modalInputs.${index}`, {
 													required: "Input text is required",
 													maxLength: {
 														value: 100,
@@ -101,12 +101,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 													X
 												</button>
 											)}
-											<p>
-												{
-													errors.trigger?.modalInputs?.[index]?.text
-														?.message
-												}
-											</p>
+											<p>{errors.trigger?.modalInputs?.[index]?.message}</p>
 										</div>
 									);
 								})}
@@ -114,9 +109,9 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 									<button
 										type="button"
 										onClick={() =>
-											modalInputAppend({
-												text: "",
-											})
+											modalInputAppend(
+												`Enter the input ${modalInputFields.length + 1}:`
+											)
 										}
 									>
 										+ Input
@@ -133,11 +128,9 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 	// Show or hide the discord modal
 	function SetModal() {
 		if (IsModal) {
-			reset({ ...getValues, ModalInput: [] });
+			reset({ ...getValues });
 		} else {
-			modalInputAppend({
-				text: "",
-			});
+			modalInputAppend("Enter the input 1:");
 		}
 		return setIsModal(!IsModal);
 	}

@@ -18,7 +18,9 @@ export default async function submit(req, res) {
 		return res.json({ msg: "guild not found" });
 	}
 	console.log(data); // -------------------------------------------- To delete -------------------------------------------
-
+	console.log(data.trigger?.modalInputs); // -------------------------------------------- To delete -------------------------------------------
+	console.log(data.action[0]?.inputs);
+	return;
 	// Save the new script depending on its type
 	if (data.scriptType == "command") {
 		let commands = guild.commands;
