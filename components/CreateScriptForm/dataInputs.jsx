@@ -21,7 +21,9 @@ export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 								},
 							})}
 						/>
-						<button onClick={() => remove(index)}>X</button>
+						<button type="button" onClick={() => remove(index)}>
+							X
+						</button>
 						<p>{errors.Data?.[nestIndex]?.input?.[index]?.value?.message}</p>
 					</div>
 				);
@@ -29,6 +31,7 @@ export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 
 			{fields.length < 10 && (
 				<button
+					type="button"
 					onClick={() =>
 						append({
 							input: "",

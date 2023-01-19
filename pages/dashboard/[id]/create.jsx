@@ -4,11 +4,24 @@ import { GuildHeader } from "../../../components/GuildHeader";
 import { CreateScriptForm } from "../../../components/CreateScriptForm/main";
 
 export default function DashboardIDCreatePage({ session, guild }) {
+	// Check if the guild has less than 20 scripts
+	const guildHasTooManyScripts = guild.commands.length >= 20;
+
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			<GuildHeader guild={guild} />
-			<h2 className="mt-5 mb-3">Create a new script:</h2>
-			<CreateScriptForm guild={guild} />
+			{guildHasTooManyScripts ? (
+				<>
+					<h2 className="mt-5 mb-3">
+						You have reached the maximum number of commands for this guild
+					</h2>
+				</>
+			) : (
+				<>
+					<h2 className="mt-5 mb-3">Create a new script:</h2>
+					<CreateScriptForm guild={guild} />
+				</>
+			)}
 		</main>
 	);
 }

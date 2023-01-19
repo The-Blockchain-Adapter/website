@@ -34,7 +34,11 @@ export const ActionFields = ({ control, register, errors }) => {
 							<option value="message">Discord message</option>
 						</select>
 
-						{index > 0 && <button onClick={() => actionRemove(index)}>X</button>}
+						{index > 0 && (
+							<button type="button" onClick={() => actionRemove(index)}>
+								X
+							</button>
+						)}
 						<p>{errors.Action?.[index]?.type?.message}</p>
 
 						{ActionTypesArray[index] === "message" && (
@@ -58,6 +62,7 @@ export const ActionFields = ({ control, register, errors }) => {
 
 			{actionFields.length < 10 && (
 				<button
+					type="button"
 					onClick={() =>
 						actionAppend({
 							type: "",

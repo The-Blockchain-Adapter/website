@@ -32,9 +32,6 @@ export function CreateScriptForm({ guild }) {
 			.then((data) => {
 				console.log(data);
 				// ---------------------------------------- Handle data ----------------------------------------
-			})
-			.catch((err) => {
-				console.log(err.message);
 			});
 	};
 
@@ -45,25 +42,25 @@ export function CreateScriptForm({ guild }) {
 
 	//Main form component
 	return (
-		<form onSubmit={handleSubmit(() => {})}>
+		<form
+			onSubmit={(e) =>
+				handleSubmit(
+					onSubmit,
+					onError
+				)(e).catch((e) => {
+					console.log("e", e);
+				})
+			}
+		>
 			<TriggerField {...{ control, register, errors, getValues, reset }} />
 
 			<DataFields {...{ control, register, errors }} />
 
 			<ActionFields {...{ control, register, errors }} />
-
-			<button
-				onClick={(e) =>
-					handleSubmit(
-						onSubmit,
-						onError
-					)(e).catch((e) => {
-						console.log("e", e);
-					})
-				}
-			>
-				Create the Script
+			<button>
+				<input type="submit" />
 			</button>
 		</form>
 	);
 }
+// Create the Script</input>

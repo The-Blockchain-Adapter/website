@@ -60,7 +60,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 						<input type="checkbox" {...register("admin")} />
 					</div>
 					<div>
-						<button onClick={() => SetModal()}>
+						<button type="button" onClick={() => SetModal()}>
 							<span>{IsModal ? "-" : "+"}</span> Modal
 						</button>
 						{IsModal && (
@@ -97,7 +97,10 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 												/>
 											</label>
 											{index > 0 && (
-												<button onClick={() => modalInputRemove(index)}>
+												<button
+													type="button"
+													onClick={() => modalInputRemove(index)}
+												>
 													X
 												</button>
 											)}
@@ -107,6 +110,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 								})}
 								{modalInputFields.length < 4 && (
 									<button
+										type="button"
 										onClick={() =>
 											modalInputAppend({
 												text: "",

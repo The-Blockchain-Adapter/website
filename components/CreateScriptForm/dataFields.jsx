@@ -34,7 +34,9 @@ export const DataFields = ({ control, register, errors }) => {
 						>
 							<option value="view">View Function</option>
 						</select>
-						<button onClick={() => dataRemove(index)}>X</button>
+						<button type="button" onClick={() => dataRemove(index)}>
+							X
+						</button>
 						<p>{errors.Data?.[index]?.type?.message}</p>
 
 						{DataTypesArray[index] === "view" && (
@@ -100,6 +102,7 @@ export const DataFields = ({ control, register, errors }) => {
 			})}
 			{dataFields.length < 10 && (
 				<button
+					type="button"
 					onClick={() =>
 						dataAppend({
 							type: "",

@@ -10,46 +10,35 @@ export default async function submit(req, res) {
 		return res.json({ msg: "no data" });
 	}
 
-	console.log(data); // To delete
+	// Get the client and the database connection from mongoDB
+	let client = await clientPromise;
+	let db = await client.db();
+	let guild = await db.collection("guilds").findOne({ guildId: data.guildId });
+	if (!guild) {
+		return res.json({ msg: "guild not found" });
+	}
 
-	/*
-		if (data.scriptType == "command") {
-			// Get the client and the database connection from mongoDB
-			let client = await clientPromise;
-			let db = await client.db();
-			let guild = await db.collection("guilds").findOne({ guildId: data.guildId });
-
-			// Check if the guild exists
-			if (!guild) {
-				return res.json({ msg: "guild not found" });
+	// Save the new script depending on its type
+	if (data.scriptType == "command") {
+		let commands = guild.commands;
+		console.log(data); // -------------------------------------------- To delete -------------------------------------------
+		commands.push(data); //----------------------- UNcomment this line to save the command in the database -----------------
+		await db.collection("guilds").updateOne(
+			{ guildId: data.guildId },
+			{
+				$set: {
+					commands: commands,
+				},
 			}
+		);
+	} else {
+		return res.json({ msg: "not a command script" });
+	}
 
-			// Check if the guild has less than 20 commands
-			if (guild.commands.length >= 20) {
-				return res.json({ msg: "Too many commands" });
-			}
+	return res.json({ msg: "Your script has been saved successfully!" });
+}
 
-			// Check if the command name is empty
-			if (data.commandName == "") {
-				return res.json({ msg: "command name is empty" });
-			}
-
-			// Check if the command name is already used
-			if (
-				guild.commands.find((command) => {
-					if (command.name == data.commandName) {
-						return true;
-					}
-				})
-			) {
-				return res.json({ msg: "command name already used" });
-			}
-
-			// Check if the modal title is empty
-			if (data.IsModal && data.modalTitle == "") {
-				return res.json({ msg: "modal title is empty" });
-			}
-
+/*
 			// Check if the modal inputs are empty
 			const ModalInputsArray = [];
 			for (let i = 0; i < data.ModalInputsLettersArray.length; i++) {
@@ -75,22 +64,4 @@ export default async function submit(req, res) {
 				data: [] || [],
 				action: [],
 			};
-
-			// Save the new command in the guild object in mongodb
-			let commands = guild.commands;
-			commands.push(newCommand);
-			await db.collection("guilds").updateOne(
-				{ guildId: data.guildId },
-				{
-					$set: {
-						commands: commands,
-					},
-				}
-			);
-
-			return res.json({ msg: "YESSS" });
-		} else {
-			return res.json({ msg: "not a command script" });
-		}
-		*/
-}
+			*/
