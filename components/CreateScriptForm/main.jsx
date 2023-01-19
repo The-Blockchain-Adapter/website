@@ -20,11 +20,11 @@ export function CreateScriptForm({ guild }) {
 	});
 
 	//Handle the form submit
-	const onSubmit = async (data) => {
+	const onSubmit = async (script) => {
 		fetch("/api/submit", {
 			method: "POST",
 			body: JSON.stringify({
-				...data,
+				...script,
 				discordId: guild.discordId,
 			}),
 		})
@@ -52,7 +52,7 @@ export function CreateScriptForm({ guild }) {
 				})
 			}
 		>
-			<TriggerField {...{ control, register, errors, getValues, reset }} />
+			<TriggerField {...{ control, register, errors, getValues, reset, guild }} />
 
 			<DataFields {...{ control, register, errors }} />
 

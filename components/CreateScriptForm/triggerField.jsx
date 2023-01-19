@@ -4,7 +4,7 @@ import { useState } from "react";
 // Get the number of modal inputs for the data fields
 export let modalInputNumber = 0;
 
-export const TriggerField = ({ control, register, errors, getValues, reset }) => {
+export const TriggerField = ({ control, register, errors, getValues, reset, guild }) => {
 	//Handle the modal input fields
 	const {
 		fields: modalInputFields,
@@ -51,6 +51,11 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 									value: /^[a-z]+$/,
 									message: "Only write lower case letters without spaces",
 								},
+								validate: {
+									unique: (value) =>
+										IsDifferentCommandName(value) ||
+										"This command name is already taken",
+								},
 							})}
 						/>
 					</div>
@@ -85,7 +90,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 												Input {String.fromCharCode(65 + index)} Text
 											</label>
 											<input
-												{...register(`trigger.modalInputs.${index}`, {
+												{...register(`trigger.modalInputs.${index}.text`, {
 													required: "Input text is required",
 													maxLength: {
 														value: 100,
@@ -101,18 +106,19 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 													X
 												</button>
 											)}
-											<p>{errors.trigger?.modalInputs?.[index]?.message}</p>
+											<p>
+												{
+													errors.trigger?.modalInputs?.[index]?.test
+														?.message
+												}
+											</p>
 										</div>
 									);
 								})}
 								{modalInputFields.length < 4 && (
 									<button
 										type="button"
-										onClick={() =>
-											modalInputAppend(
-												`Enter the input ${modalInputFields.length + 1}:`
-											)
-										}
+										onClick={() => modalInputAppend({ text: "" })}
 									>
 										+ Input
 									</button>
@@ -130,8 +136,19 @@ export const TriggerField = ({ control, register, errors, getValues, reset }) =>
 		if (IsModal) {
 			reset({ ...getValues });
 		} else {
-			modalInputAppend("Enter the input 1:");
+			modalInputAppend({ text: "" });
 		}
 		return setIsModal(!IsModal);
+	}
+
+	// Check if the command name is already taken
+	function IsDifferentCommandName(name) {
+		console.log(name);
+		for (let i = 0; i < guild.scripts.length; i++) {
+			if (guild.scripts[i].trigger.name == name) {
+				return false;
+			}
+		}
+		return true;
 	}
 };

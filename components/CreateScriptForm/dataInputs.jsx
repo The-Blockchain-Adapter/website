@@ -13,7 +13,7 @@ export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 					<div key={field.id}>
 						<label>Input {index + 1} value</label>
 						<input
-							{...register(`data.${nestIndex}.inputs.${index}`, {
+							{...register(`data.${nestIndex}.inputs.${index}.value`, {
 								required: "Input value is required",
 								maxLength: {
 									value: 500,
@@ -24,13 +24,13 @@ export const NestedInputs = ({ nestIndex, control, register, errors }) => {
 						<button type="button" onClick={() => remove(index)}>
 							X
 						</button>
-						<p>{errors.data?.[nestIndex]?.inputs?.[index]?.message}</p>
+						<p>{errors.data?.[nestIndex]?.inputs?.[index]?.value?.message}</p>
 					</div>
 				);
 			})}
 
 			{fields.length < 10 && (
-				<button type="button" onClick={() => append("A")}>
+				<button type="button" onClick={() => append({ value: "" })}>
 					+ Input
 				</button>
 			)}
