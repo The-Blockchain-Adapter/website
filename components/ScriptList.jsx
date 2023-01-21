@@ -53,19 +53,19 @@ export const ScriptList = ({ guild }) => {
 										<span className="font-bold">For admins only: </span>
 										{script.trigger.onlyAdmin.toString()}
 									</p>
-									{script.trigger.modalInputs?.length > 0 && (
+									{script.trigger.inputs?.length > 0 && (
 										<div>
 											<p>
 												<span className="font-bold">Modal title: </span>
-												{script.trigger.modalTitle}
+												{script.trigger.title}
 											</p>
-											{script.trigger.modalInputs.map((input, index) => {
+											{script.trigger.inputs.map((input, index) => {
 												return (
 													<div>
 														<p>
 															<span className="font-bold">
 																Input{" "}
-																{script.trigger.modalOutputs[index]}{" "}
+																{script.trigger.outputs[index]}{" "}
 																text:{" "}
 															</span>
 															{input}

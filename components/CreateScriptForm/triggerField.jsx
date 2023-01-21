@@ -11,7 +11,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 		append: modalInputAppend,
 		remove: modalInputRemove,
 	} = useFieldArray({
-		name: "trigger.modalInputs",
+		name: "trigger.inputs",
 		control,
 		rules: { min: 1 },
 	});
@@ -78,7 +78,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 								<label>Modal title:</label>
 								<input
 									className="rounded-lg"
-									{...register("trigger.modalTitle", {
+									{...register("trigger.title", {
 										required: "Modal title is required",
 										maxLength: {
 											value: 100,
@@ -87,7 +87,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 									})}
 								/>
 							</div>
-							<p>{errors.trigger?.modalTitle?.message}</p>
+							<p>{errors.trigger?.title?.message}</p>
 							{modalInputFields.map((field, index) => {
 								return (
 									<div key={field.id}>
@@ -105,7 +105,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 											)}
 											<input
 												className="rounded-lg"
-												{...register(`trigger.modalInputs.${index}.text`, {
+												{...register(`trigger.inputs.${index}.text`, {
 													required: "Input text is required",
 													maxLength: {
 														value: 100,
@@ -114,11 +114,11 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 												})}
 											/>
 										</div>
-										<p>{errors.trigger?.modalInputs?.[index]?.text?.message}</p>
+										<p>{errors.trigger?.inputs?.[index]?.text?.message}</p>
 									</div>
 								);
 							})}
-							{modalInputFields.length < 4 && (
+							{modalInputFields.length < 5 && (
 								<div className="text-center mt-3">
 									<button
 										type="button"
@@ -139,7 +139,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 	// Show or hide the discord modal
 	function SetModal() {
 		if (IsModal) {
-			reset({ ...getValues, trigger: { ...getValues, modalInputs: [] } });
+			reset({ ...getValues, trigger: { ...getValues, inputs: [] } });
 		} else {
 			modalInputAppend({ text: "" });
 		}

@@ -23,15 +23,15 @@ export default async function submit(req, res) {
 	}
 
 	// Convert the modal inputs as an array of strings and add outputs as an array of letters
-	if (script.trigger.modalInputs?.length > 0) {
-		let modalInputs = [];
-		let modalOutputs = [];
-		for (let i = 0; i < script.trigger.modalInputs?.length; i++) {
-			modalInputs.push(script.trigger.modalInputs[i].text);
-			modalOutputs.push(String.fromCharCode(65 + i));
+	if (script.trigger.inputs?.length > 0) {
+		let inputs = [];
+		let outputs = [];
+		for (let i = 0; i < script.trigger.inputs?.length; i++) {
+			inputs.push(script.trigger.inputs[i].text);
+			outputs.push(String.fromCharCode(65 + i));
 		}
-		script.trigger.modalInputs = modalInputs;
-		script.trigger.modalOutputs = modalOutputs;
+		script.trigger.inputs = inputs;
+		script.trigger.outputs = outputs;
 	}
 
 	// Convert the data inputs as an array of strings and add outputs as letters
@@ -41,8 +41,8 @@ export default async function submit(req, res) {
 			inputs.push(script.data[i].inputs[j].value);
 		}
 		script.data[i].inputs = inputs;
-		const modalInputsLength = script.trigger.modalInputs?.length || 0;
-		script.data[i].output = String.fromCharCode(65 + i + modalInputsLength);
+		const inputsLength = script.trigger.inputs?.length || 0;
+		script.data[i].output = String.fromCharCode(65 + i + inputsLength);
 	}
 
 	// Save the new script to the database
