@@ -11,16 +11,11 @@ export default function DashboardIDCreatePage({ session, guild }) {
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			<GuildHeader guild={guild} />
 			{guildHasTooManyScripts ? (
-				<>
-					<h2 className="mt-5 mb-3">
-						You have reached the maximum number of scripts for this guild
-					</h2>
-				</>
+				<h2 className="mt-5 mb-3">
+					You have reached the maximum number of scripts for this guild
+				</h2>
 			) : (
-				<>
-					<h2 className="mt-5 mb-3">Create a new script:</h2>
-					<CreateScriptForm guild={guild} />
-				</>
+				<CreateScriptForm guild={guild} />
 			)}
 		</main>
 	);

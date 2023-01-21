@@ -24,21 +24,21 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 	const [IsModal, setIsModal] = useState(false);
 
 	return (
-		<div>
-			<div>
-				<label>Trigger type</label>
+		<div className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-lg shadow-gray-400">
+			<div className="flex justify-between">
+				<label>Trigger type:</label>
 				<select
 					{...register("trigger.type", { required: "Trigger type is required" })}
 					onClick={(val) => setTriggerType(val.target.value)}
 				>
 					<option value="command">/ Command</option>
 				</select>
-				<p>{errors.trigger?.type?.message}</p>
 			</div>
+			<p>{errors.trigger?.type?.message}</p>
 
 			{TriggerType === "command" && (
 				<div>
-					<div>
+					<div className="flex justify-between">
 						<label>Command name</label>
 						<input
 							{...register("trigger.name", {
@@ -60,7 +60,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 						/>
 					</div>
 					<p>{errors.trigger?.name?.message}</p>
-					<div>
+					<div className="flex justify-between">
 						<label>Only for admins</label>
 						<input type="checkbox" {...register("trigger.onlyAdmin")} />
 					</div>
@@ -143,7 +143,6 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 
 	// Check if the command name is already taken
 	function IsDifferentCommandName(name) {
-		console.log(name);
 		for (let i = 0; i < guild.scripts.length; i++) {
 			if (guild.scripts[i].trigger.name == name) {
 				return false;

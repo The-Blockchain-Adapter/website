@@ -2,8 +2,12 @@ import { useForm } from "react-hook-form";
 import { TriggerField } from "./triggerField";
 import { DataFields } from "./dataFields";
 import { ActionFields } from "./actionFields";
+import { useState } from "react";
+import { useRouter } from "next/router";
 
 export function CreateScriptForm({ guild }) {
+	const router = useRouter();
+
 	//React hook form stuff to handle the form data and errors
 	const {
 		register,
@@ -19,6 +23,9 @@ export function CreateScriptForm({ guild }) {
 		},
 	});
 
+	const [IsSumbitted, setIsSumbitted] = useState(false);
+	const [scriptName, setscriptName] = useState("");
+
 	//Handle the form submit
 	const onSubmit = async (script) => {
 		fetch("/api/submit", {
@@ -30,8 +37,8 @@ export function CreateScriptForm({ guild }) {
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
-				// ---------------------------------------- Handle data ----------------------------------------
+				setIsSumbitted(data.msg);
+				setscriptName(data.name);
 			});
 	};
 
@@ -42,25 +49,42 @@ export function CreateScriptForm({ guild }) {
 
 	//Main form component
 	return (
-		<form
-			onSubmit={(e) =>
-				handleSubmit(
-					onSubmit,
-					onError
-				)(e).catch((e) => {
-					console.log("e", e);
-				})
-			}
-		>
-			<TriggerField {...{ control, register, errors, getValues, reset, guild }} />
+		<div>
+			{!IsSumbitted ? (
+				<div>
+					<h2 className="mt-5 mb-3">Create a new script:</h2>
+					<form
+						onSubmit={(e) =>
+							handleSubmit(
+								onSubmit,
+								onError
+							)(e).catch((e) => {
+								console.log("e", e);
+							})
+						}
+					>
+						<TriggerField {...{ control, register, errors, getValues, reset, guild }} />
 
-			<DataFields {...{ control, register, errors }} />
+						<DataFields {...{ control, register, errors }} />
 
-			<ActionFields {...{ control, register, errors }} />
-			<button>
-				<input type="submit" />
-			</button>
-		</form>
+						<ActionFields {...{ control, register, errors }} />
+
+						<button>
+							<input type="submit" /> your new script
+						</button>
+					</form>
+				</div>
+			) : (
+				<div className="justify-center">
+					<h2 className="mt-5 mb-3">Your {scriptName} script has been registered!</h2>
+					<button
+						onClick={() => router.push(`/dashboard/${router.query.id}`)}
+						className="rounded-full duration-300"
+					>
+						<h4>Return back home</h4>
+					</button>
+				</div>
+			)}
+		</div>
 	);
 }
-// Create the Script</input>

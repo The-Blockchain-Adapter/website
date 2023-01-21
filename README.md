@@ -4,6 +4,8 @@
 
 2. Enter your passwords in the .env file
 
+    Choose Node.js as version '2.2.12 or later' during your mongoDB connection
+
 3. Enter theses commands in your terminal
 
 ```bash

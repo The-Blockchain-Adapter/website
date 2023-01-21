@@ -57,5 +57,5 @@ export default async function submit(req, res) {
 		}
 	);
 
-	return res.json({ msg: "Your script has been saved successfully!" });
+	return res.json({ msg: true, name: script.trigger.name });
 }
