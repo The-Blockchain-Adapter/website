@@ -19,44 +19,66 @@ export const DataFields = ({ control, register, errors }) => {
 		<div>
 			{dataFields.map((field, index) => {
 				return (
-					<div key={field.id}>
-						<label>Data type</label>
-						<select
-							{...register(`data.${index}.type`, {
-								required: "Data type is required",
-							})}
-							onClick={(val) =>
-								setDataTypes((prev) => ({
-									...prev,
-									[index]: val.target.value,
-								}))
-							}
+					<div
+						key={field.id}
+						className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-md shadow-gray-400 mb-6"
+					>
+						<h3
+							className="text-center underline underline-offset-2 cursor-pointer"
+							onClick={() => dataRemove(index)}
 						>
-							<option value="view">View Function</option>
-						</select>
-						<button type="button" onClick={() => dataRemove(index)}>
-							X
-						</button>
+							Data {String.fromCharCode(65 + modalInputNumber + index)}
+						</h3>
+						<div className="flex justify-between items-center mt-2">
+							<label>Type:</label>
+							<select
+								className="ml-2 rounded-lg"
+								{...register(`data.${index}.type`, {
+									required: "Data type is required",
+								})}
+								onClick={(val) =>
+									setDataTypes((prev) => ({
+										...prev,
+										[index]: val.target.value,
+									}))
+								}
+							>
+								<option value="view">View Function</option>
+							</select>
+						</div>
 						<p>{errors.data?.[index]?.type?.message}</p>
 
 						{DataTypesArray[index] === "view" && (
 							<div>
-								<div>
-									<label>Function Name</label>
+								<div className="flex justify-between items-center mt-2">
+									<label>Blockchain:</label>
+									<select
+										className="rounded-lg"
+										{...register(`data.${index}.blockchain`, {
+											required: "Blockchain is required",
+										})}
+									>
+										<option value="goerli">Goerli</option>
+									</select>
+								</div>
+								<div className="flex justify-between items-center mt-2">
+									<label>Function name:</label>
 									<input
+										className="ml-2 rounded-lg"
 										{...register(`data.${index}.name`, {
-											required: "Function Name is required",
+											required: "Function name is required",
 											maxLength: {
 												value: 100,
 												message: "Maximum function name length is 100",
 											},
 										})}
 									/>
-									<p>{errors.data?.[index]?.name?.message}</p>
 								</div>
-								<div>
-									<label>Address</label>
+								<p>{errors.data?.[index]?.name?.message}</p>
+								<div className="flex justify-between items-center mt-2">
+									<label>Address:</label>
 									<input
+										className="rounded-lg"
 										{...register(`data.${index}.address`, {
 											required: "Address is required",
 											maxLength: {
@@ -65,21 +87,12 @@ export const DataFields = ({ control, register, errors }) => {
 											},
 										})}
 									/>
-									<p>{errors.data?.[index]?.address?.message}</p>
 								</div>
-								<div>
-									<label>Blockchain</label>
-									<select
-										{...register(`data.${index}.blockchain`, {
-											required: "Blockchain is required",
-										})}
-									>
-										<option value="goerli">Goerli</option>
-									</select>
-								</div>
-								<div>
-									<label>ABI</label>
+								<p>{errors.data?.[index]?.address?.message}</p>
+								<div className="flex justify-between items-center mt-2">
+									<label>ABI:</label>
 									<input
+										className="rounded-lg"
 										{...register(`data.${index}.abi`, {
 											required: "ABI is required",
 											maxLength: {
@@ -88,13 +101,12 @@ export const DataFields = ({ control, register, errors }) => {
 											},
 										})}
 									/>
-									<p>{errors.data?.[index]?.abi?.message}</p>
 								</div>
+								<p>{errors.data?.[index]?.abi?.message}</p>
 								<NestedInputs
 									nestIndex={index}
 									{...{ control, register, errors }}
 								/>
-								<p>Output: {String.fromCharCode(65 + modalInputNumber + index)}</p>
 							</div>
 						)}
 					</div>
@@ -103,13 +115,14 @@ export const DataFields = ({ control, register, errors }) => {
 			{dataFields.length < 10 && (
 				<button
 					type="button"
+					className="bg-[#7289da] mb-6"
 					onClick={() =>
 						dataAppend({
 							type: "",
 						})
 					}
 				>
-					+ Data
+					<h4>+ Data</h4>
 				</button>
 			)}
 		</div>

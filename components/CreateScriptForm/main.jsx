@@ -69,18 +69,17 @@ export function CreateScriptForm({ guild }) {
 
 						<ActionFields {...{ control, register, errors }} />
 
-						<button>
-							<input type="submit" /> your new script
+						<button className="mb-6">
+							<h4>
+								<input type="submit" /> your new script
+							</h4>
 						</button>
 					</form>
 				</div>
 			) : (
 				<div className="justify-center">
 					<h2 className="mt-5 mb-3">Your {scriptName} script has been registered!</h2>
-					<button
-						onClick={() => router.push(`/dashboard/${router.query.id}`)}
-						className="rounded-full duration-300"
-					>
+					<button onClick={() => router.push(`/dashboard/${router.query.id}`)}>
 						<h4>Return back home</h4>
 					</button>
 				</div>

@@ -24,12 +24,14 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 	const [IsModal, setIsModal] = useState(false);
 
 	return (
-		<div className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-lg shadow-gray-400">
-			<div className="flex justify-between">
-				<label>Trigger type:</label>
+		<div className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-md shadow-gray-400 mb-6">
+			<h3 className="text-center underline underline-offset-2">Trigger</h3>
+			<div className="flex justify-between items-center mt-2">
+				<label>Type:</label>
 				<select
 					{...register("trigger.type", { required: "Trigger type is required" })}
 					onClick={(val) => setTriggerType(val.target.value)}
+					className="rounded-lg ml-2"
 				>
 					<option value="command">/ Command</option>
 				</select>
@@ -38,9 +40,10 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 
 			{TriggerType === "command" && (
 				<div>
-					<div className="flex justify-between">
-						<label>Command name</label>
+					<div className="flex justify-between items-center mt-2">
+						<label>Command name:</label>
 						<input
+							className="ml-2 rounded-lg"
 							{...register("trigger.name", {
 								required: "Command name is required",
 								maxLength: {
@@ -60,36 +63,48 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 						/>
 					</div>
 					<p>{errors.trigger?.name?.message}</p>
-					<div className="flex justify-between">
-						<label>Only for admins</label>
+					<div className="flex justify-between items-center mt-2">
+						<label>Only for admins:</label>
 						<input type="checkbox" {...register("trigger.onlyAdmin")} />
 					</div>
-					<div>
-						<button type="button" onClick={() => SetModal()}>
+					<div className="text-center mt-2">
+						<button type="button" onClick={() => SetModal()} className="bg-[#7289da]">
 							<span>{IsModal ? "-" : "+"}</span> Modal
 						</button>
-						{IsModal && (
-							<div>
-								<div>
-									<label>Modal title</label>
-									<input
-										{...register("trigger.modalTitle", {
-											required: "Modal title is required",
-											maxLength: {
-												value: 100,
-												message: "Maximum modal title length is 100",
-											},
-										})}
-									/>
-								</div>
-								<p>{errors.trigger?.modalTitle?.message}</p>
-								{modalInputFields.map((field, index) => {
-									return (
-										<div key={field.id}>
+					</div>
+					{IsModal && (
+						<div>
+							<div className="flex justify-between items-center mt-2">
+								<label>Modal title:</label>
+								<input
+									className="rounded-lg"
+									{...register("trigger.modalTitle", {
+										required: "Modal title is required",
+										maxLength: {
+											value: 100,
+											message: "Maximum modal title length is 100",
+										},
+									})}
+								/>
+							</div>
+							<p>{errors.trigger?.modalTitle?.message}</p>
+							{modalInputFields.map((field, index) => {
+								return (
+									<div key={field.id}>
+										<div className="flex justify-between items-center mt-2">
 											<label>
-												Input {String.fromCharCode(65 + index)} Text
+												Input {String.fromCharCode(65 + index)} text:
 											</label>
+											{modalInputFields.length > 1 && (
+												<div
+													onClick={() => modalInputRemove(index)}
+													className="cursor-pointer font-bold"
+												>
+													X
+												</div>
+											)}
 											<input
+												className="rounded-lg"
 												{...register(`trigger.modalInputs.${index}.text`, {
 													required: "Input text is required",
 													maxLength: {
@@ -98,34 +113,24 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 													},
 												})}
 											/>
-											{index > 0 && (
-												<button
-													type="button"
-													onClick={() => modalInputRemove(index)}
-												>
-													X
-												</button>
-											)}
-											<p>
-												{
-													errors.trigger?.modalInputs?.[index]?.test
-														?.message
-												}
-											</p>
 										</div>
-									);
-								})}
-								{modalInputFields.length < 4 && (
+										<p>{errors.trigger?.modalInputs?.[index]?.text?.message}</p>
+									</div>
+								);
+							})}
+							{modalInputFields.length < 4 && (
+								<div className="text-center mt-3">
 									<button
 										type="button"
 										onClick={() => modalInputAppend({ text: "" })}
+										className="bg-[#7289da]"
 									>
 										+ Input
 									</button>
-								)}
-							</div>
-						)}
-					</div>
+								</div>
+							)}
+						</div>
+					)}
 				</div>
 			)}
 		</div>
@@ -134,7 +139,7 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 	// Show or hide the discord modal
 	function SetModal() {
 		if (IsModal) {
-			reset({ ...getValues });
+			reset({ ...getValues, trigger: { ...getValues, modalInputs: [] } });
 		} else {
 			modalInputAppend({ text: "" });
 		}
