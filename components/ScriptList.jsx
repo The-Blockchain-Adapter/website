@@ -25,6 +25,12 @@ export const ScriptList = ({ guild }) => {
 
 	return (
 		<main>
+			{guild.scripts.length == 0 && (
+				<div>
+					<h2>You don't have any scripts yet.</h2>
+					<h2>Try creating one!</h2>
+				</div>
+			)}
 			{guild.scripts.map((script, index) => {
 				return (
 					<div className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-md shadow-gray-400 my-6">

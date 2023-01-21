@@ -78,7 +78,9 @@ export function CreateScriptForm({ guild }) {
 				</div>
 			) : (
 				<div className="justify-center">
-					<h2 className="mt-5 mb-3">Your {scriptName} script has been registered!</h2>
+					<h2 className="mt-5 mb-3">
+						Your {scriptName} script has been successfully registered!
+					</h2>
 					<button onClick={() => router.push(`/dashboard/${router.query.id}`)}>
 						<h4>Return back home</h4>
 					</button>
