@@ -1,12 +1,13 @@
 import { getSession } from "next-auth/react";
 import { authorizeAccess } from "../../../lib/mongo/authoriseAccess";
 import { GuildHeader } from "../../../components/GuildHeader";
+import { ScriptList } from "../../../components/ScriptList";
 
 export default function DashboardIDPage({ session, guild }) {
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
-			{<GuildHeader guild={guild} />}
-			<p className="my-5">List of all the actual scripts in blocks.</p>
+			<GuildHeader guild={guild} />
+			<ScriptList scripts={guild.scripts} />
 		</main>
 	);
 }
