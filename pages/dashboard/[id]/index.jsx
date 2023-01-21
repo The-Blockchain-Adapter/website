@@ -7,7 +7,7 @@ export default function DashboardIDPage({ session, guild }) {
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			<GuildHeader guild={guild} />
-			<ScriptList scripts={guild.scripts} />
+			<ScriptList guild={guild} />
 		</main>
 	);
 }

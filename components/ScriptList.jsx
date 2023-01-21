@@ -1,7 +1,31 @@
-export const ScriptList = ({ scripts }) => {
+export const ScriptList = ({ guild }) => {
+	//Handle a script deletion
+	const deleteScript = async (index) => {
+		try {
+			fetch("/api/deleteScript", {
+				method: "POST",
+				body: JSON.stringify({
+					index,
+					discordId: guild.discordId,
+				}),
+			})
+				.then((response) => response.json())
+				.then((data) => {
+					console.log(data);
+					if (data.msg) {
+						window.location.reload(false);
+					}
+				});
+		} catch {
+			(err) => {
+				console.log("Server error...");
+			};
+		}
+	};
+
 	return (
 		<main>
-			{scripts.map((script, index) => {
+			{guild.scripts.map((script, index) => {
 				return (
 					<div className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-md shadow-gray-400 my-6">
 						<h3 className="text-center">
@@ -112,6 +136,14 @@ export const ScriptList = ({ scripts }) => {
 								</div>
 							);
 						})}
+						<div className="text-center">
+							<button
+								className="bg-[#ecf0f3] text-red-500 rounded-2xl p-2"
+								onClick={() => deleteScript(index)}
+							>
+								Delete
+							</button>
+						</div>
 					</div>
 				);
 			})}

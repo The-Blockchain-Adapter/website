@@ -59,7 +59,7 @@ export function CreateScriptForm({ guild }) {
 								onSubmit,
 								onError
 							)(e).catch((e) => {
-								console.log("e", e);
+								console.log("Server error...");
 							})
 						}
 					>
