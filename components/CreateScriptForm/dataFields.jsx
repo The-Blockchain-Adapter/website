@@ -58,6 +58,7 @@ export const DataFields = ({ control, register, errors }) => {
 											required: "Blockchain is required",
 										})}
 									>
+										<option value="mainnet">Ethereum</option>
 										<option value="goerli">Goerli</option>
 									</select>
 								</div>
