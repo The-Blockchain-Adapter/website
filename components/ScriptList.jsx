@@ -119,6 +119,22 @@ export const ScriptList = ({ guild }) => {
 											)}
 										</div>
 									)}
+									{data.type == "balance" && (
+										<div>
+											<p>
+												<span className="font-bold">Type: </span>
+												Get a user balance
+											</p>
+											<p>
+												<span className="font-bold">User address: </span>
+												{data.address}
+											</p>
+											<p>
+												<span className="font-bold">Blockchain: </span>
+												{data.blockchain}
+											</p>
+										</div>
+									)}
 								</div>
 							);
 						})}
