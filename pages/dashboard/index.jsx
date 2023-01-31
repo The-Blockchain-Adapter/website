@@ -4,8 +4,32 @@ import { getUserGuilds } from "../../lib/mongo/getUserGuilds";
 import { createOrUpdateUser } from "../../lib/mongo/createOrUpdateUser";
 import { getSession } from "next-auth/react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { SiDiscord } from "react-icons/si";
 
 export default function DashboardPage({ session, guilds }) {
+	if (guilds === "error") {
+		return (
+			<main className="max-w-[1200px] m-auto text-center justify-center items-center">
+				<div className="m-10">
+					<h2>Your session has expired. Please login again.</h2>
+
+					<button
+						className="duration-300 mt-5 "
+						onClick={() =>
+							signIn("discord", { redirect: true, callbackUrl: "/dashboard" })
+						}
+					>
+						<div className="text-center justify-center items-center flex">
+							<SiDiscord size={30} className="mr-2" />
+							Login again with Discord
+						</div>
+					</button>
+				</div>
+			</main>
+		);
+	}
+
 	const router = useRouter();
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
@@ -54,6 +78,11 @@ export async function getServerSideProps(context) {
 
 	// Get all the guilds that are registered in the database and where the user is admin
 	const guilds = await getUserGuilds(session);
+	if (guilds === null) {
+		return {
+			props: { session, guilds: "error" },
+		};
+	}
 
 	//Update the user on the database
 	await createOrUpdateUser(session, guilds);

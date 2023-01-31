@@ -44,6 +44,7 @@ export const DataFields = ({ control, register, errors }) => {
 								}
 							>
 								<option value="view">View Function</option>
+								<option value="balance">Get User Balance</option>
 							</select>
 						</div>
 						<p>{errors.data?.[index]?.type?.message}</p>
@@ -108,6 +109,37 @@ export const DataFields = ({ control, register, errors }) => {
 									nestIndex={index}
 									{...{ control, register, errors }}
 								/>
+							</div>
+						)}
+
+						{DataTypesArray[index] === "balance" && (
+							<div>
+								<div className="flex justify-between items-center mt-2">
+									<label>Blockchain:</label>
+									<select
+										className="rounded-lg"
+										{...register(`data.${index}.blockchain`, {
+											required: "Blockchain is required",
+										})}
+									>
+										<option value="mainnet">Ethereum</option>
+										<option value="goerli">Goerli</option>
+									</select>
+								</div>
+								<div className="flex justify-between items-center mt-2">
+									<label>Address:</label>
+									<input
+										className="rounded-lg"
+										{...register(`data.${index}.address`, {
+											required: "Address is required",
+											maxLength: {
+												value: 42,
+												message: "Maximum address length is 42",
+											},
+										})}
+									/>
+								</div>
+								<p>{errors.data?.[index]?.address?.message}</p>
 							</div>
 						)}
 					</div>
