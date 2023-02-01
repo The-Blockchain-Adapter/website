@@ -50,6 +50,20 @@ export const ActionFields = ({ control, register, errors }) => {
 						{ActionTypesArray[index] === "message" && (
 							<div>
 								<div className="flex justify-between items-center mt-2">
+									<label>Channel name:</label>
+									<input
+										className="ml-2 rounded-lg"
+										{...register(`action.${index}.channel`, {
+											required: "Channel Name is required",
+											maxLength: {
+												value: 100,
+												message: "Maximum channel name length is 100",
+											},
+										})}
+									/>
+								</div>
+								<p>{errors.action?.[index]?.channel?.message}</p>
+								<div className="flex justify-between items-center mt-2">
 									<label>Text:</label>
 									<input
 										className="ml-2 rounded-lg"
@@ -57,7 +71,7 @@ export const ActionFields = ({ control, register, errors }) => {
 											required: "Text is required",
 											maxLength: {
 												value: 500,
-												message: "Maximum function name length is 500",
+												message: "Maximum text length is 500",
 											},
 										})}
 									/>

@@ -33,11 +33,13 @@ export default async function submit(req, res) {
 
 	// Convert the data inputs as an array of strings
 	for (let i = 0; i < script.data?.length; i++) {
-		let inputs = [];
-		for (let j = 0; j < script.data[i].inputs?.length; j++) {
-			inputs.push(script.data[i].inputs[j].value);
+		if (script.data[i].inputs?.length > 0) {
+			let inputs = [];
+			for (let j = 0; j < script.data[i].inputs?.length; j++) {
+				inputs.push(script.data[i].inputs[j].value);
+			}
+			script.data[i].inputs = inputs;
 		}
-		script.data[i].inputs = inputs;
 	}
 
 	// Save the new script to the database

@@ -189,6 +189,10 @@ export const ScriptList = ({ guild }) => {
 												Bot message on discord
 											</p>
 											<p>
+												<span className="font-bold">Channel: </span>
+												{action.channel}
+											</p>
+											<p>
 												<span className="font-bold">Message: </span>
 												{action.text}
 											</p>
