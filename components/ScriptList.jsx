@@ -161,6 +161,19 @@ export const ScriptList = ({ guild }) => {
 											</p>
 										</div>
 									)}
+
+									{data.type == "guild" && (
+										<div>
+											<p>
+												<span className="font-bold">Type: </span>
+												Get your guild data
+											</p>
+											<p>
+												<span className="font-bold">Path: </span>
+												{data.path}
+											</p>
+										</div>
+									)}
 								</div>
 							);
 						})}
