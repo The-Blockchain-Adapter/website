@@ -45,6 +45,7 @@ export const DataFields = ({ control, register, errors }) => {
 							>
 								<option value="view">View Function</option>
 								<option value="balance">Get User Balance</option>
+								<option value="api">Call an API</option>
 							</select>
 						</div>
 						<p>{errors.data?.[index]?.type?.message}</p>
@@ -140,6 +141,38 @@ export const DataFields = ({ control, register, errors }) => {
 									/>
 								</div>
 								<p>{errors.data?.[index]?.address?.message}</p>
+							</div>
+						)}
+
+						{DataTypesArray[index] === "api" && (
+							<div>
+								<div className="flex justify-between items-center mt-2">
+									<label>URL:</label>
+									<input
+										className="ml-2 rounded-lg"
+										{...register(`data.${index}.url`, {
+											required: "URL is required",
+											maxLength: {
+												value: 100,
+												message: "Maximum URL length is 100",
+											},
+										})}
+									/>
+								</div>
+								<p>{errors.data?.[index]?.url?.message}</p>
+								<div className="flex justify-between items-center mt-2">
+									<label>Path:</label>
+									<input
+										className="ml-2 rounded-lg"
+										{...register(`data.${index}.path`, {
+											maxLength: {
+												value: 100,
+												message: "Maximum path length is 100",
+											},
+										})}
+									/>
+								</div>
+								<p>{errors.data?.[index]?.path?.message}</p>
 							</div>
 						)}
 					</div>
