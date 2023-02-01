@@ -22,16 +22,13 @@ export default async function submit(req, res) {
 		return res.json({ msg: "guild not found" });
 	}
 
-	// Convert the modal inputs as an array of strings and add outputs as an array of letters
+	// Convert the modal inputs as an array of strings
 	if (script.trigger.inputs?.length > 0) {
 		let inputs = [];
-		let outputs = [];
 		for (let i = 0; i < script.trigger.inputs?.length; i++) {
 			inputs.push(script.trigger.inputs[i].text);
-			outputs.push(String.fromCharCode(65 + i));
 		}
 		script.trigger.inputs = inputs;
-		script.trigger.outputs = outputs;
 	}
 
 	// Convert the data inputs as an array of strings

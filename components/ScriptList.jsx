@@ -65,7 +65,7 @@ export const ScriptList = ({ guild }) => {
 														<p>
 															<span className="font-bold">
 																Input{" "}
-																{script.trigger.outputs[index]}{" "}
+																{String.fromCharCode(65 + index)}{" "}
 																text:{" "}
 															</span>
 															{input}
