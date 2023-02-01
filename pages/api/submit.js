@@ -34,15 +34,13 @@ export default async function submit(req, res) {
 		script.trigger.outputs = outputs;
 	}
 
-	// Convert the data inputs as an array of strings and add outputs as letters
+	// Convert the data inputs as an array of strings
 	for (let i = 0; i < script.data?.length; i++) {
 		let inputs = [];
 		for (let j = 0; j < script.data[i].inputs?.length; j++) {
 			inputs.push(script.data[i].inputs[j].value);
 		}
 		script.data[i].inputs = inputs;
-		const inputsLength = script.trigger.inputs?.length || 0;
-		script.data[i].output = String.fromCharCode(65 + i + inputsLength);
 	}
 
 	// Save the new script to the database

@@ -79,10 +79,18 @@ export const ScriptList = ({ guild }) => {
 							)}
 						</div>
 
-						{script.data.map((data) => {
+						{script.data.map((data, index) => {
 							return (
 								<div className="mb-2">
-									<h4 className="text-center">Data {data.output}:</h4>
+									<h4 className="text-center">
+										Data{" "}
+										{script.trigger.inputs
+											? String.fromCharCode(
+													65 + index + script.trigger?.inputs?.length
+											  )
+											: String.fromCharCode(65 + index)}
+										:
+									</h4>
 									{data.type == "view" && (
 										<div>
 											<p>
