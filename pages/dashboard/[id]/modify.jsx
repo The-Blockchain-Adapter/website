@@ -1,13 +1,13 @@
 import { getSession } from "next-auth/react";
 import { authorizeAccess } from "../../../lib/mongo/authoriseAccess";
 import { GuildHeader } from "../../../components/Headers/GuildHeader";
-import { ScriptList } from "../../../components/ScriptList/main";
+import { ModifyScriptForm } from "../../../components/ModifyScript/main";
 
-export default function DashboardIDPage({ session, guild }) {
+export default function DashboardIDModifyPage({ session, guild }) {
 	return (
 		<main className="max-w-[1200px] m-auto text-center justify-center items-center">
 			<GuildHeader guild={guild} />
-			<ScriptList guild={guild} />
+			<ModifyScriptForm guild={guild} />
 		</main>
 	);
 }

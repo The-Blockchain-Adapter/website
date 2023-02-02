@@ -1,4 +1,3 @@
-import { GuildItem } from "../../components/GuildItem";
 import { useRouter } from "next/router";
 import { getUserGuilds } from "../../lib/mongo/getUserGuilds";
 import { createOrUpdateUser } from "../../lib/mongo/createOrUpdateUser";
@@ -8,6 +7,14 @@ import { signIn } from "next-auth/react";
 import { SiDiscord } from "react-icons/si";
 
 export default function DashboardPage({ session, guilds }) {
+	function getSource(guild) {
+		if (guild.icon !== null) {
+			return `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png`;
+		} else {
+			return "/default_guild_icon.png";
+		}
+	}
+
 	if (guilds === "error") {
 		return (
 			<main className="max-w-[1200px] m-auto text-center justify-center items-center">
@@ -55,7 +62,15 @@ export default function DashboardPage({ session, guilds }) {
 					<h2>Select a Guild:</h2>
 					{guilds.map((guild) => (
 						<div key={guild.id} onClick={() => router.push(`/dashboard/${guild.id}`)}>
-							<GuildItem guild={guild} />
+							<div className="cursor-pointer shadow-md shadow-gray-400 w-fit rounded-full p-4 my-7 bg-gray-300 flex items-center justify-center m-auto hover:scale-105 ease-in duration-300">
+								<img
+									className="rounded-full mr-3 shadow-md shadow-gray-400"
+									src={getSource(guild)}
+									height={55}
+									width={55}
+								/>
+								<h4>{guild.name}</h4>
+							</div>
 						</div>
 					))}
 				</div>

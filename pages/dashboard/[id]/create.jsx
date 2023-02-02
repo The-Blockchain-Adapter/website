@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { authorizeAccess } from "../../../lib/mongo/authoriseAccess";
-import { GuildHeader } from "../../../components/GuildHeader";
+import { GuildHeader } from "../../../components/Headers/GuildHeader";
 import { CreateScriptForm } from "../../../components/CreateScriptForm/main";
 
 export default function DashboardIDCreatePage({ session, guild }) {
