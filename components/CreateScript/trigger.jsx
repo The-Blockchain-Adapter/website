@@ -88,36 +88,32 @@ export const TriggerField = ({ control, register, errors, getValues, reset, guil
 								/>
 							</div>
 							<p>{errors.trigger?.title?.message}</p>
-							{modalInputFields.map((field, index) => {
-								return (
-									<div key={field.id}>
-										<div className="flex justify-between items-center mt-2">
-											<label>
-												Input {String.fromCharCode(65 + index)} text:
-											</label>
-											{modalInputFields.length > 1 && (
-												<div
-													onClick={() => modalInputRemove(index)}
-													className="cursor-pointer font-bold"
-												>
-													X
-												</div>
-											)}
-											<input
-												className="rounded-lg"
-												{...register(`trigger.inputs.${index}.text`, {
-													required: "Input text is required",
-													maxLength: {
-														value: 100,
-														message: "Maximum modal text length is 100",
-													},
-												})}
-											/>
-										</div>
-										<p>{errors.trigger?.inputs?.[index]?.text?.message}</p>
+							{modalInputFields.map((field, index) => (
+								<div key={field.id}>
+									<div className="flex justify-between items-center mt-2">
+										<label>Input {String.fromCharCode(65 + index)} text:</label>
+										{modalInputFields.length > 1 && (
+											<div
+												onClick={() => modalInputRemove(index)}
+												className="cursor-pointer font-bold"
+											>
+												X
+											</div>
+										)}
+										<input
+											className="rounded-lg"
+											{...register(`trigger.inputs.${index}.text`, {
+												required: "Input text is required",
+												maxLength: {
+													value: 100,
+													message: "Maximum modal text length is 100",
+												},
+											})}
+										/>
 									</div>
-								);
-							})}
+									<p>{errors.trigger?.inputs?.[index]?.text?.message}</p>
+								</div>
+							))}
 							{modalInputFields.length < 5 && (
 								<div className="text-center mt-3">
 									<button

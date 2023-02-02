@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { TriggerField } from "./triggerField";
-import { DataFields } from "./dataFields";
-import { ActionFields } from "./actionFields";
+import { TriggerField } from "./trigger";
+import { DataFields } from "./data";
+import { ActionFields } from "./action";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
