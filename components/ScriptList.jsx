@@ -31,11 +31,14 @@ export const ScriptList = ({ guild }) => {
 					<h2>Try creating one!</h2>
 				</div>
 			)}
-			{guild.scripts.map((script, index) => {
+			{guild.scripts.map((script, scriptIndex) => {
 				return (
-					<div className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-md shadow-gray-400 my-6">
+					<div
+						key={script.id + "-" + scriptIndex}
+						className="text-start bg-gray-300 w-fit m-auto p-3 rounded-3xl shadow-md shadow-gray-400 my-6"
+					>
 						<h3 className="text-center">
-							Script {index + 1}: {script.trigger.name}
+							Script {scriptIndex + 1}: {script.trigger.name}
 						</h3>
 						<div className="mb-2">
 							<h4 className="text-center">Trigger:</h4>
@@ -59,13 +62,25 @@ export const ScriptList = ({ guild }) => {
 												<span className="font-bold">Modal title: </span>
 												{script.trigger.title}
 											</p>
-											{script.trigger.inputs.map((input, index) => {
+											{script.trigger.inputs.map((input, inputIndex) => {
 												return (
-													<div>
+													<div
+														key={
+															script.id +
+															"-" +
+															scriptIndex +
+															"-" +
+															input.id +
+															"-" +
+															inputIndex
+														}
+													>
 														<p>
 															<span className="font-bold">
 																Input{" "}
-																{String.fromCharCode(65 + index)}{" "}
+																{String.fromCharCode(
+																	65 + inputIndex
+																)}{" "}
 																text:{" "}
 															</span>
 															{input}
@@ -79,16 +94,27 @@ export const ScriptList = ({ guild }) => {
 							)}
 						</div>
 
-						{script.data.map((data, index) => {
+						{script.data.map((data, dataIndex) => {
 							return (
-								<div className="mb-2">
+								<div
+									className="mb-2"
+									key={
+										script.id +
+										"-" +
+										scriptIndex +
+										"-" +
+										data.id +
+										"-" +
+										dataIndex
+									}
+								>
 									<h4 className="text-center">
 										Data{" "}
 										{script.trigger.inputs
 											? String.fromCharCode(
-													65 + index + script.trigger?.inputs?.length
+													65 + dataIndex + script.trigger?.inputs?.length
 											  )
-											: String.fromCharCode(65 + index)}
+											: String.fromCharCode(65 + dataIndex)}
 										:
 									</h4>
 									{data.type == "view" && (
@@ -111,12 +137,27 @@ export const ScriptList = ({ guild }) => {
 											</p>
 											{data.inputs?.length > 0 && (
 												<div>
-													{data.inputs.map((input, index) => {
+													{data.inputs.map((input, inputIndex) => {
 														return (
-															<div>
+															<div
+																key={
+																	script.id +
+																	"-" +
+																	scriptIndex +
+																	"-" +
+																	data.id +
+																	"-" +
+																	dataIndex +
+																	"-" +
+																	input.id +
+																	"-" +
+																	inputIndex
+																}
+															>
 																<p>
 																	<span className="font-bold">
-																		Input {index + 1} value:{" "}
+																		Input {inputIndex + 1}{" "}
+																		value:{" "}
 																	</span>
 																	{input}
 																</p>
@@ -178,10 +219,21 @@ export const ScriptList = ({ guild }) => {
 							);
 						})}
 
-						{script.action.map((action, index) => {
+						{script.action.map((action, actionIndex) => {
 							return (
-								<div className="mb-2">
-									<h4 className="text-center">Action {index + 1}:</h4>
+								<div
+									className="mb-2"
+									key={
+										script.id +
+										"-" +
+										scriptIndex +
+										"-" +
+										action.id +
+										"-" +
+										actionIndex
+									}
+								>
+									<h4 className="text-center">Action {actionIndex + 1}:</h4>
 									{action.type == "message" && (
 										<div>
 											<p>
@@ -204,7 +256,7 @@ export const ScriptList = ({ guild }) => {
 						<div className="text-center">
 							<button
 								className="bg-[#ecf0f3] text-red-500 rounded-2xl p-2"
-								onClick={() => deleteScript(index)}
+								onClick={() => deleteScript(scriptIndex)}
 							>
 								Delete
 							</button>
