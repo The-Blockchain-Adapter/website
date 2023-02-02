@@ -2,10 +2,56 @@ import React, { useState } from "react";
 import { ModifyTrigger } from "./trigger";
 import { ModifyData } from "./data";
 import { ModifyAction } from "./action";
+import { useForm } from "react-hook-form";
 
 export const ModifyScript = ({ guild }) => {
 	const [Script, setScript] = useState(guild.scripts[0]);
 
+	console.log(Script);
+
+	//React hook form stuff
+	const {
+		register,
+		reset,
+		handleSubmit,
+		getValues,
+		formState: { errors },
+		control,
+	} = useForm({
+		defaultValues: {
+			trigger: Script.trigger,
+			data: Script.data,
+			action: Script.action,
+		},
+	});
+
+	//Handle the form submit
+	const onSubmit = async (script, scriptIndex) => {
+		console.log(script);
+
+		/*
+		//Delete the script from the database
+		await deleteScript(scriptIndex);
+
+		fetch("/api/submit", {
+			method: "POST",
+			body: JSON.stringify({
+				...script,
+				discordId: guild.discordId,
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+
+			});*/
+	};
+
+	// If the user wants to see the errors on the console after submitting form
+	const onError = (errors) => {
+		console.log("ERRORS: ", errors);
+	};
+
+	/*
 	//Handle a script deletion
 	const deleteScript = async (index) => {
 		try {
@@ -30,6 +76,22 @@ export const ModifyScript = ({ guild }) => {
 		}
 	};
 
+	<div className="text-center">
+						<button
+							className="bg-[#ecf0f3] text-red-500 rounded-2xl p-2"
+							onClick={() => deleteScript(scriptIndex)}
+						>
+							Delete
+						</button>
+					</div>
+
+
+					
+						<ModifyData {...{ control, register, errors, Script }} />
+
+						<ModifyAction {...{ control, register, errors, Script }} />
+*/
+
 	return (
 		<div>
 			{guild.scripts.length == 0 ? (
@@ -43,7 +105,8 @@ export const ModifyScript = ({ guild }) => {
 						<label>Modify the </label>
 						<select
 							onClick={(val) => {
-								setScript(val.target.value);
+								arrangeInputs(val.target.value);
+								window.location.reload(false);
 							}}
 						>
 							{guild.scripts.map((script, scriptIndex) => (
@@ -55,22 +118,54 @@ export const ModifyScript = ({ guild }) => {
 						<label> Script</label>
 					</div>
 
-					<ModifyTrigger />
-
-					<ModifyData />
-
-					<ModifyAction />
-
-					<div className="text-center">
-						<button
-							className="bg-[#ecf0f3] text-red-500 rounded-2xl p-2"
-							onClick={() => deleteScript(scriptIndex)}
+					{Script && (
+						<form
+							onSubmit={(e) =>
+								handleSubmit(
+									onSubmit,
+									onError
+								)(e).catch((e) => {
+									console.log("Server error...");
+								})
+							}
 						>
-							Delete
-						</button>
-					</div>
+							<ModifyTrigger
+								{...{ control, register, errors, getValues, reset, Script }}
+							/>
+
+							<button className="mb-6">
+								<h4>
+									<input type="submit" /> your script
+								</h4>
+							</button>
+						</form>
+					)}
 				</div>
 			)}
 		</div>
 	);
+
+	function arrangeInputs(script) {
+		// Convert the modal inputs as an object with the text as key
+		if (script.trigger.inputs?.length > 0) {
+			let inputs = [];
+			for (let i = 0; i < script.trigger.inputs?.length; i++) {
+				inputs[i].text = script.trigger.inputs[i];
+			}
+			script.trigger.inputs = inputs;
+		}
+
+		// Convert the data inputs as an object with the value as key
+		for (let i = 0; i < script.data?.length; i++) {
+			if (script.data[i].inputs?.length > 0) {
+				let inputs = [];
+				for (let j = 0; j < script.data[i].inputs?.length; j++) {
+					inputs[i].value = script.data[i].inputs[j];
+				}
+				script.data[i].inputs = inputs;
+			}
+		}
+
+		return setScript(script);
+	}
 };
